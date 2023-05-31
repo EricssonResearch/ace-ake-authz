@@ -114,7 +114,7 @@ For constrained IoT deployments {{RFC7228}} the overhead and processing contribu
 This document describes a procedure for augmenting the lightweight authenticated Diffie-Hellman key exchange EDHOC {{I-D.ietf-lake-edhoc}} with third party-assisted authorization.
 
 The procedure involves a device, a domain authenticator, and an authorization service.
-The device and domain authenticator perform mutual authentication and authorization, assisted by the authorization service which provides relevant authorization information to the device (a "voucher") and to the authenticator.
+The device and domain authenticator perform mutual authentication and authorization, assisted by a the authorization service which provides relevant authorization information to the device (a "voucher") and to the authenticator.
 
 In this document we consider the target interaction for which authorization is needed to be "enrollment", for example joining a network for the first time (e.g., {{RFC9031}}), but it can be applied to authorize other target interactions.
 
@@ -169,9 +169,10 @@ Note the cardinality of the involved parties, it is expected that the authentica
 
 The protocol is based on the following pre-existing relations between the device (U), the domain authenticator (V) and the authorization service (W).
 
-* U and W have an explicit relation: U is configured with a public key of W, see {{device}}.
-* V and W have an implicit relation, e.g., based on web PKI with trusted CA certificates, see {{domain-auth}}.
-* U and V need not have any previous relation, this protocol establishes a relation between U and V.
+* U and W have an explicit relationship: U is configured with a public key of W, see {{device}}.
+* V and W have an implicit relationship, e.g., based on web PKI with trusted CA certificates, see {{domain-auth}}.
+* U and V do not have any previous relation, the point of this protocol is to establish a relationship between U and V.
+* V has a credential ID\_CRED\_V of type XX? which will be the basis for the relationship.
 
 Each of the three parties have protected communication with the other two during the protocol.
 
@@ -712,5 +713,64 @@ The authenticator playing the role of the {{RFC9031}} JRC obtains the device ide
 
 Flight 4 is the OSCORE response carrying CoJP response message.
 The message is processed as specified in {{Section 8.4.2 of RFC9031}}.
+
+# Scaling considerations for Registrar (V)
+
+{{?I-D.richardson-anima-registrar-considerations}} describes a number of models for implementation of the Domain Authenticator (V, or Registrar) function.
+Some of the architecture detail are replicated here with some updates to terminology.
+
+~~~~ ARCHVIEW
+                  .------------.
+                  |    MASA/W  |
+                  |  Interface |  northbound interface (Vn)
+                  | BRSKI-MASA |
+                  '------------'
+                         ^
+                         |
+ .------------.          |           .---------------.
+ | management |    .----------.      | certification |
+ | interface  |<---| database |----->|   authority   |
+ '------------'    '----------'      '---------------'
+                         |
+                         |
+                         v
+.------------.     .-----------.
+| Join Proxy |     | Pledge/V  |--.
+|------------|     | Interface |  |  southbound interface (Vs)
+| GRASP      |     |   EDHOC   |  |
+| (DULL)     |     '-----------'  |
+'------------'        '-----------'
+~~~~
+{:scalableArchitect #authenticator title="Reference Internal Architecture for Domain Authenticator"}
+
+A key aspect of this architecture is that the southbound process can be horizontally scaled to accomodate the required number of onboarding sessions.
+Onboarding a large number (multiple tens of thousand of devices) across a diversity of different networks may require more compute power than is available in a single platform.
+Requirements for availability may also mandate that the onboarding system be highly available, spread across multiple physical systems, on different electrical circuits and/or network connections.
+
+As explained in section {{domain-auth}}, each Pledge-interface system on the southbound may have a unique ID\_CRED\_U.
+Sharing the secret among interfaces is not a wise cryptographic choice, and as that credential has long-term value to an attacker, it would be best if it was stored in a secure element (HSM, TPM, etc.).
+
+It is therefore necessary when building this system that any proof-of-posesssion that V must do to W, occur in a way that can be safely stored into the database.
+
+~~~~~~~~~~~ aasvg
+U                              Vs   Db   Vn                         W
+|                              |    |     |                         |
+|                              |    |     |                         |
+|                              |    |     |                         |
++----------------------------->|    |     |                         |
+|          EDHOC message_1     |    |     |                         |
+|                              |--->|     |                         |
+|                              |    |---->|                         |
+|                              |    |     +------------------------>|
+|                              |    |     |  Voucher Request (VREQ) |
+|                              |    |     |<------------------------+
+|                              |    |     | Voucher Response (VRES) |
+|                              |    |<----|                         |
+|                              |<---|     |                         |
+|<-----------------------------+    |     |                         |
+|          EDHOC message_2     |    |     |                         |
+~~~~~~~~~~~
+{: #fig-scaledV title="Example of database intermediary in scaled V" artwork-align="center"}
+
 
 --- fluff
