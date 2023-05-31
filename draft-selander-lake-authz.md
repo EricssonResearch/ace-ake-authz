@@ -114,7 +114,7 @@ For constrained IoT deployments {{RFC7228}} the overhead and processing contribu
 This document describes a procedure for augmenting the lightweight authenticated Diffie-Hellman key exchange EDHOC {{I-D.ietf-lake-edhoc}} with third party-assisted authorization.
 
 The procedure involves a device, a domain authenticator, and an authorization service.
-The device and domain authenticator perform mutual authentication and authorization, assisted by the authorization service which provides relevant authorization information to the device (a "voucher") and to the authenticator.
+The device and domain authenticator perform mutual authentication and authorization, assisted by a the authorization service which provides relevant authorization information to the device (a "voucher") and to the authenticator.
 
 In this document we consider the target interaction for which authorization is needed to be "enrollment", for example joining a network for the first time (e.g., {{RFC9031}}), but it can be applied to authorize other target interactions.
 
@@ -161,7 +161,7 @@ Note the cardinality of the involved parties, it is expected that the authentica
 +----------+    |       +---------------+           +---------------+
               Voucher
 ~~~~~~~~~~~
-{: #fig-overview title="Overview of message flow. EDHOC is used on the constrained link between U and V. Voucher_Info and Voucher are sent in EDHOC External Authorization Data (EAD). The link between V and W is not constrained." artwork-align="center"}
+{: #fig-overview title="Overview of message flow. EDHOC is used on the constrained link between U and V. Voucher\_Info and Voucher are sent in EDHOC External Authorization Data (EAD). The link between V and W is not constrained." artwork-align="center"}
 
 
 
@@ -169,9 +169,10 @@ Note the cardinality of the involved parties, it is expected that the authentica
 
 The protocol is based on the following pre-existing relations between the device (U), the domain authenticator (V) and the authorization service (W).
 
-* U and W have an explicit relation: U is configured with a public key of W, see {{device}}.
-* V and W have an implicit relation, e.g., based on web PKI with trusted CA certificates, see {{domain-auth}}.
-* U and V need not have any previous relation, this protocol establishes a relation between U and V.
+* U and W have an explicit relationship: U is configured with a public key of W, see {{device}}.
+* V and W have an implicit relationship, e.g., based on web PKI with trusted CA certificates, see {{domain-auth}}.
+* U and V do not have any previous relation, the point of this protocol is to establish a relationship between U and V.
+* V has a credential ID\_CRED\_V of type XX? which will be the basis for the relationship.
 
 Each of the three parties have protected communication with the other two during the protocol.
 
@@ -199,39 +200,39 @@ Each of the three parties have protected communication with the other two during
 
 ## Device (U) {#device}
 
-To authenticate to V, the device (U) runs EDHOC in the role of Initiator with authentication credential CRED_U, for example, an X.509 certificate or a CBOR Web Token (CWT, {{RFC8392}}). CRED_U may, for example, be carried in ID_CRED_I of EDHOC message_3 or be provisioned to V over a non-constrained network, see bottom of {{fig-protocol}}.
+To authenticate to V, the device (U) runs EDHOC in the role of Initiator with authentication credential CRED\_U, for example, an X.509 certificate or a CBOR Web Token (CWT, {{RFC8392}}). CRED\_U may, for example, be carried in ID\_CRED\_I of EDHOC message\_3 or be provisioned to V over a non-constrained network, see bottom of {{fig-protocol}}.
 
-U also needs to identify itself to W, this device identifier is denoted by ID_U. The purpose of ID_U is for W to be able to determine if the device with this identifier is authorized to enroll with V. ID_U may be a reference to CRED_U, like ID_CRED_I in EDHOC (see {{Section 3.5.2 of I-D.ietf-lake-edhoc}}), or a device identifier from a different name space, such as EUI-64 identifiers.
+U also needs to identify itself to W, this device identifier is denoted by ID\_U. The purpose of ID\_U is for W to be able to determine if the device with this identifier is authorized to enroll with V. ID\_U may be a reference to CRED\_U, like ID\_CRED\_I in EDHOC (see {{Section 3.5.2 of I-D.ietf-lake-edhoc}}), or a device identifier from a different name space, such as EUI-64 identifiers.
 
 U is also provisioned with information about W:
 
-* A static public DH key of W (G_W) used to establish secure communication with the authorization service (see {{U-W}}).
-* Location information about the authorization service (LOC_W) that can be used by V to reach W. This is typically a URI but may alternatively be only the domain name.
+* A static public DH key of W (G\_W) used to establish secure communication with the authorization service (see {{U-W}}).
+* Location information about the authorization service (LOC\_W) that can be used by V to reach W. This is typically a URI but may alternatively be only the domain name.
 
 ## Domain Authenticator (V) {#domain-auth}
 
-To authenticate to U, the domain authenticator (V) runs EDHOC in the role of Responder with an authentication credential CRED_V, which is a CWT Claims Set {{RFC8392}} containing a public key of V, see {{V_2}}. This proves to U the possession of the private key corresponding to the public key of CRED_V. CRED_V typically needs to be transported to U in EDHOC (using  ID_CRED_R = CRED_V, see {{Section 3.5.2 of I-D.ietf-lake-edhoc}}) since there is no previous relation between U and V.
+To authenticate to U, the domain authenticator (V) runs EDHOC in the role of Responder with an authentication credential CRED\_V, which is a CWT Claims Set {{RFC8392}} containing a public key of V, see {{V2}}. This proves to U the possession of the private key corresponding to the public key of CRED\_V. CRED\_V typically needs to be transported to U in EDHOC (using  ID\_CRED\_R = CRED\_V, see {{Section 3.5.2 of I-D.ietf-lake-edhoc}}) since there is no previous relation between U and V.
 
-V and W need to establish a secure (confidentiality and integrity protected) connection for the Voucher Request/Response protocol. Furthermore, W needs access the same credential CRED_V as V used with U, and V needs to prove to W the possession of the private key corresponding to the public key of CRED_V. It is RECOMMENDED that V authenticates to W using the same credential CRED_V as with U.
+V and W need to establish a secure (confidentiality and integrity protected) connection for the Voucher Request/Response protocol. Furthermore, W needs access the same credential CRED\_V as V used with U, and V needs to prove to W the possession of the private key corresponding to the public key of CRED\_V. It is RECOMMENDED that V authenticates to W using the same credential CRED\_V as with U.
 
-* V and W may protect the Voucher Request/Response protocol using TLS 1.3 with client authentication {{RFC8446}} if CRED_V is an X.509 certificate of a signature public key. However, note that CRED_V may not be a valid credential to use with TLS 1.3, e.g., when U and V run EDHOC with method 1 or 3, where the public key of CRED_V is a static Diffie-Hellman key.
+* V and W may protect the Voucher Request/Response protocol using TLS 1.3 with client authentication {{RFC8446}} if CRED\_V is an X.509 certificate of a signature public key. However, note that CRED\_V may not be a valid credential to use with TLS 1.3, e.g., when U and V run EDHOC with method 1 or 3, where the public key of CRED\_V is a static Diffie-Hellman key.
 
-* V may run EDHOC with W using ID_CRED_I = CRED_V. In this case the secure connection between V and W may be based on OSCORE {{RFC8613}}.
+* V may run EDHOC with W using ID\_CRED\_I = CRED\_V. In this case the secure connection between V and W may be based on OSCORE {{RFC8613}}.
 
-Note that both TLS 1.3 and EDHOC may be run between V and W during this setup procedure. For example, W may authenticate to V using TLS 1.3 with server certificates signed by a CA trusted by V, and then V may run EDHOC using CRED_V over the secure TLS connection to W, see {{fig-protocol}}.
+Note that both TLS 1.3 and EDHOC may be run between V and W during this setup procedure. For example, W may authenticate to V using TLS 1.3 with server certificates signed by a CA trusted by V, and then V may run EDHOC using CRED\_V over the secure TLS connection to W, see {{fig-protocol}}.
 
-Other details of proof-of-possession related to CRED_V and transport of CRED_V are out of scope of this document.
+Other details of proof-of-possession related to CRED\_V and transport of CRED\_V are out of scope of this document.
 
 
 
 ## Authorization Service (W) {#authz-server}
 
-The authorization service (W) is assumed to have the private DH key corresponding to G_W, which is used to establish secure communication with the device (see {{U-W}}). W provides to U the authorization decision for enrollment with V in the form of a voucher (see {{voucher}}). Authorization policies are out of scope for this document.
+The authorization service (W) is assumed to have the private DH key corresponding to G\_W, which is used to establish secure communication with the device (see {{U-W}}). W provides to U the authorization decision for enrollment with V in the form of a voucher (see {{voucher}}). Authorization policies are out of scope for this document.
 
-Authentication credentials and communication security with V is described in {{domain-auth}}. To calculate the voucher, W needs access to message_1 and CRED_V as used in the EDHOC run between U and V, see {{voucher}}.
+Authentication credentials and communication security with V is described in {{domain-auth}}. To calculate the voucher, W needs access to message\_1 and CRED\_V as used in the EDHOC run between U and V, see {{voucher}}.
 
-* W MUST verify that CRED_V is bound to the secure connection between W and V
-* W MUST verify that V is in possession of the private key corresponding to the public key of CRED_V
+* W MUST verify that CRED\_V is bound to the secure connection between W and V
+* W MUST verify that V is in possession of the private key corresponding to the public key of CRED\_V
 
 W needs to be available during the execution of the protocol between U and V.
 
@@ -295,7 +296,7 @@ The protocol consist of three security sessions going on in parallel:
          |                               |                                  |
 
 ~~~~~~~~~~~
-{: #fig-protocol title="Overview of the protocol (inside the box): W-assisted authorization of U and V to each other: EDHOC between U and V, and Voucher Request/Response between V and W. Before the protocol, V and W are assumed to have established a secure channel and performed proof-of-possession of relevant keys. Credential lookup of CRED_U may involve W or other credential database." artwork-align="center"}
+{: #fig-protocol title="Overview of the protocol (inside the box): W-assisted authorization of U and V to each other: EDHOC between U and V, and Voucher Request/Response between V and W. Before the protocol, V and W are assumed to have established a secure channel and performed proof-of-possession of relevant keys. Credential lookup of CRED\_U may involve W or other credential database." artwork-align="center"}
 
 
 
@@ -303,25 +304,25 @@ The protocol consist of three security sessions going on in parallel:
 
 The protocol illustrated in {{fig-protocol}} reuses several components of EDHOC:
 
-* G_X, the ephemeral public Diffie-Hellman key of U, is also used in the protocol between U and W.
+* G\_X, the ephemeral public Diffie-Hellman key of U, is also used in the protocol between U and W.
 
-* SUITES_I includes the cipher suite for EDHOC selected by U, and also defines the algorithms used between U and W (see {{Section 3.6 of I-D.ietf-lake-edhoc}}):
+* SUITES\_I includes the cipher suite for EDHOC selected by U, and also defines the algorithms used between U and W (see {{Section 3.6 of I-D.ietf-lake-edhoc}}):
 
-    * EDHOC AEAD algorithm: used to encrypt ID_U
+    * EDHOC AEAD algorithm: used to encrypt ID\_U
     * EDHOC hash algorithm: used for key derivation and to calculate the voucher
     * EDHOC MAC length in bytes: length of the voucher
     * EDHOC key exchange algorithm: used to calculate the shared secret between U and W
 
-* EAD_1, EAD_2 are the External Authorization Data message fields of message_1 and message_2, respectively, see {{Section 3.8 of I-D.ietf-lake-edhoc}}. This document specifies the EAD items with ead_label = TBD1, see {{iana-ead}}).
+* EAD\_1, EAD\_2 are the External Authorization Data message fields of message\_1 and message\_2, respectively, see {{Section 3.8 of I-D.ietf-lake-edhoc}}. This document specifies the EAD items with ead\_label = TBD1, see {{iana-ead}}).
 
-* ID_CRED_I and ID_CRED_R are used to identify the authentication credentials CRED_U and CRED_V, respectively. As shown at the bottom of {{fig-protocol}}, V may use W to obtain CRED_U. CRED_V is transported in ID_CRED_R in message_2, see {{V_2}}.
+* ID\_CRED\_I and ID\_CRED\_R are used to identify the authentication credentials CRED\_U and CRED\_V, respectively. As shown at the bottom of {{fig-protocol}}, V may use W to obtain CRED\_U. CRED\_V is transported in ID\_CRED\_R in message\_2, see {{V2}}.
 
 The protocol also reuses the EDHOC-Extract and EDHOC-Expand key derivation from EDHOC (see {{Section 4 of I-D.ietf-lake-edhoc}}).
 
 * The intermediate pseudo-random key PRK is derived using EDHOC-Extract():
     * PRK = EDHOC-Extract(salt, IKM)
          * where salt = 0x (the zero-length byte string)
-         * IKM is computed as an ECDH cofactor Diffie-Hellman shared secret from the public key of W, G_W, and the private key corresponding to G_X (or v.v.), see Section 5.7.1.2 of {{NIST-800-56A}}.
+         * IKM is computed as an ECDH cofactor Diffie-Hellman shared secret from the public key of W, G\_W, and the private key corresponding to G\_X (or v.v.), see Section 5.7.1.2 of {{NIST-800-56A}}.
 
 The output keying material OKM is derived from PRK using EDHOC-Expand(), which is defined in terms of the EDHOC hash algorithm of the selected cipher suite, see {{Section 4.2 of I-D.ietf-lake-edhoc}}:
 
@@ -339,11 +340,11 @@ info = (
 
 ## Device <-> Authorization Service (U <-> W) {#U-W}
 
-The protocol between U and W is carried between U and V in message_1 and message_2 ({{U-V}}), and between V and W in the Voucher Request/Response ({{V-W}}). The data is protected between the endpoints using secret keys derived from a Diffie-Hellman shared secret (see {{reuse}}) as further detailed in this section.
+The protocol between U and W is carried between U and V in message\_1 and message\_2 ({{U-V}}), and between V and W in the Voucher Request/Response ({{V-W}}). The data is protected between the endpoints using secret keys derived from a Diffie-Hellman shared secret (see {{reuse}}) as further detailed in this section.
 
-### Voucher Info {#voucher_info}
+### Voucher Info {#voucher-info}
 
-The external authorization data EAD_1 contains an EAD item with ead_label = TBD1 and ead_value = Voucher_Info, which is a CBOR byte string:
+The external authorization data EAD\_1 contains an EAD item with ead\_label = TBD1 and ead\_value = Voucher\_Info, which is a CBOR byte string:
 
 ~~~~~~~~~~~
 Voucher_Info = bstr .cbor Voucher_Info_Seq
@@ -358,14 +359,14 @@ Voucher_Info_Seq = (
 
 where
 
-* LOC_W is a text string used by V to locate W, e.g., a URI or a domain name.
-* ENC_ID is a byte string containing an encrypted identifier of U, calculated as follows:
+* LOC\_W is a text string used by V to locate W, e.g., a URI or a domain name.
+* ENC\_ID is a byte string containing an encrypted identifier of U, calculated as follows:
 
-ENC_ID is 'ciphertext' of COSE_Encrypt0 ({{Section 5.2 of RFC9052}}) computed from the following:
+ENC\_ID is 'ciphertext' of COSE\_Encrypt0 ({{Section 5.2 of RFC9052}}) computed from the following:
 
-* The encryption key K_1 and nonce IV_1 are derived as specified below.
+* The encryption key K\_1 and nonce IV\_1 are derived as specified below.
 * 'protected' is a byte string of size 0
-* 'plaintext and 'external_aad' as below:
+* 'plaintext and 'external\_aad' as below:
 
 ~~~~~~~~~~~
 plaintext = (
@@ -380,28 +381,28 @@ external_aad = (
 
 where
 
-* ID_U is an identifier of the device, see {{device}}.
+* ID\_U is an identifier of the device, see {{device}}.
 
-* SS is the selected cipher suite in SUITES_I of EDHOC message_1, see {{U-V}}.
+* SS is the selected cipher suite in SUITES\_I of EDHOC message\_1, see {{U-V}}.
 
-The derivation of K_1 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see {{reuse}}):
+The derivation of K\_1 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see {{reuse}}):
 
-* info_label = 0
+* info\_label = 0
 * context  = h''
 * length is length of key of the EDHOC AEAD algorithm in bytes
 
-The derivation of IV_1 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see {{reuse}}):
+The derivation of IV\_1 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see {{reuse}}):
 
-* info_label = 1
+* info\_label = 1
 * context = h''
 * length is length of nonce of the EDHOC AEAD algorithm in bytes
 
 
 ### Voucher {#voucher}
 
-The voucher is an assertion to U that W has authorized V. The voucher is essentially a message authentication code which binds the authentication credential of V, CRED_V, to message_1 of EDHOC.
+The voucher is an assertion to U that W has authorized V. The voucher is essentially a message authentication code which binds the authentication credential of V, CRED\_V, to message\_1 of EDHOC.
 
-The external authorization data EAD_2 contains an EAD item with ead_label = TBD1 and ead_value = Voucher, which is a CBOR byte string:
+The external authorization data EAD\_2 contains an EAD item with ead\_label = TBD1 and ead\_value = Voucher, which is a CBOR byte string:
 
 ~~~~~~~~~~~
 Voucher = bstr .cbor EDHOC-Expand(PRK, info, length)
@@ -409,8 +410,8 @@ Voucher = bstr .cbor EDHOC-Expand(PRK, info, length)
 
 The voucher is calculated with the following input to the info struct (see {{reuse}}):
 
-* info_label = 2
-* context  = bstr .cbor voucher_input
+* info\_label = 2
+* context  = bstr .cbor voucher\_input
 * length is EDHOC MAC length in bytes
 
 
@@ -425,8 +426,8 @@ voucher_input = (
 
 where
 
-* H(message_1) is the hash of EDHOC message_1, calculated from the associated voucher request, see {{voucher_request}}.
-* CRED_V is the CWT Claims Set {{RFC8392}} containing the public authentication key of V, see {{V_2}}
+* H(message\_1) is the hash of EDHOC message\_1, calculated from the associated voucher request, see {{voucher-request}}.
+* CRED\_V is the CWT Claims Set {{RFC8392}} containing the public authentication key of V, see {{V2}}
 
 ## Device <-> Authenticator (U <-> V) {#U-V}
 
@@ -436,109 +437,109 @@ This section describes the processing in U and V, which include the EDHOC protoc
 
 #### Processing in U
 
-U composes EDHOC message_1 using authentication method, identifiers, etc. according to an agreed application profile, see {{Section 3.9 of I-D.ietf-lake-edhoc}}. The selected cipher suite, in this document denoted SS, applies also to the interaction with W as detailed in {{reuse}}, in particular, with respect to the Diffie Hellman key agreement algorithm used between U and W. As part of the normal EDHOC processing, U generates the ephemeral public key G_X which is reused in the interaction with W, see {{U-W}}.
+U composes EDHOC message\_1 using authentication method, identifiers, etc. according to an agreed application profile, see {{Section 3.9 of I-D.ietf-lake-edhoc}}. The selected cipher suite, in this document denoted SS, applies also to the interaction with W as detailed in {{reuse}}, in particular, with respect to the Diffie Hellman key agreement algorithm used between U and W. As part of the normal EDHOC processing, U generates the ephemeral public key G\_X which is reused in the interaction with W, see {{U-W}}.
 
-The device sends EDHOC message_1 with EAD item (-TBD1, Voucher_Info) included in EAD_1, where Voucher_Info is specified in {{U-W}}. The negative sign indicates that the EAD item is critical, see {{Section 3.8 of I-D.ietf-lake-edhoc}}.
+The device sends EDHOC message\_1 with EAD item (-TBD1, Voucher\_Info) included in EAD\_1, where Voucher\_Info is specified in {{U-W}}. The negative sign indicates that the EAD item is critical, see {{Section 3.8 of I-D.ietf-lake-edhoc}}.
 
 
 #### Processing in V
 
-V receives EDHOC message_1 from U and processes it as specified in {{Section 5.2.3 of I-D.ietf-lake-edhoc}}, with the additional step of processing the EAD item in EAD_1. Since the EAD item is critical, if V does not recognize it or it contains information that V cannot process, then V MUST discontinue EDHOC, see {{Section 3.8 of I-D.ietf-lake-edhoc}}. Otherwise, the ead_label = TBD1, triggers the voucher request to W as described in {{V-W}}. The exchange between V and W needs to be completed successfully for the EDHOC exchange to be continued.
+V receives EDHOC message\_1 from U and processes it as specified in {{Section 5.2.3 of I-D.ietf-lake-edhoc}}, with the additional step of processing the EAD item in EAD\_1. Since the EAD item is critical, if V does not recognize it or it contains information that V cannot process, then V MUST discontinue EDHOC, see {{Section 3.8 of I-D.ietf-lake-edhoc}}. Otherwise, the ead\_label = TBD1, triggers the voucher request to W as described in {{V-W}}. The exchange between V and W needs to be completed successfully for the EDHOC exchange to be continued.
 
 ### Message 2 {#m2}
 
-#### Processing in V  {#V_2}
+#### Processing in V  {#V2}
 
 V receives the voucher response from W as described in {{V-W}}.
 
-V sends EDHOC message_2 to U with the critical EAD item (-TBD1, Voucher) included in EAD_2, where the Voucher is specified in {{U-W}}.
+V sends EDHOC message\_2 to U with the critical EAD item (-TBD1, Voucher) included in EAD\_2, where the Voucher is specified in {{U-W}}.
 
-CRED_V is a CWT Claims Set {{RFC8392}} containing the public authentication key of V encoded as a COSE_Key in the 'cnf' claim, see {{Section 3.5.2 of I-D.ietf-lake-edhoc}}.
+CRED\_V is a CWT Claims Set {{RFC8392}} containing the public authentication key of V encoded as a COSE\_Key in the 'cnf' claim, see {{Section 3.5.2 of I-D.ietf-lake-edhoc}}.
 
-ID_CRED_R contains the CWT Claims Set with 'kccs' as COSE header_map, see {{Section 9.6 of I-D.ietf-lake-edhoc}}.
+ID\_CRED\_R contains the CWT Claims Set with 'kccs' as COSE header\_map, see {{Section 9.6 of I-D.ietf-lake-edhoc}}.
 
 
 #### Processing in U
 
-U receives EDHOC message_2 from V and processes it as specified in {{Section 5.3.2 of I-D.ietf-lake-edhoc}}, with the additional step of processing the EAD item in EAD_2.
+U receives EDHOC message\_2 from V and processes it as specified in {{Section 5.3.2 of I-D.ietf-lake-edhoc}}, with the additional step of processing the EAD item in EAD\_2.
 
-If U does not recognize the EAD item or the EAD item contains information that U cannot process, then U MUST discontinue EDHOC, see {{Section 3.8 of I-D.ietf-lake-edhoc}}. Otherwise U MUST verify the Voucher by performing the same calculation as in {{voucher}} using H(message_1) and CRED_V received in ID_CRED_R of message_2. If the voucher calculated in this way is not identical to what was received in message_2, then U MUST discontinue the protocol.
+If U does not recognize the EAD item or the EAD item contains information that U cannot process, then U MUST discontinue EDHOC, see {{Section 3.8 of I-D.ietf-lake-edhoc}}. Otherwise U MUST verify the Voucher by performing the same calculation as in {{voucher}} using H(message\_1) and CRED\_V received in ID\_CRED\_R of message\_2. If the voucher calculated in this way is not identical to what was received in message\_2, then U MUST discontinue the protocol.
 
 
 ### Message 3
 
 #### Processing in U
 
-If all verifications are passed, then U sends EDHOC message_3.
+If all verifications are passed, then U sends EDHOC message\_3.
 
-EDHOC message_3 may be combined with an OSCORE request, see {{I-D.ietf-core-oscore-edhoc}}.
+EDHOC message\_3 may be combined with an OSCORE request, see {{I-D.ietf-core-oscore-edhoc}}.
 
 #### Processing in V
 
-V performs the normal EDHOC verifications of message_3. V may retrieve CRED_U from a Credential Database, after having learnt ID_CRED_I from U.
+V performs the normal EDHOC verifications of message\_3. V may retrieve CRED\_U from a Credential Database, after having learnt ID\_CRED\_I from U.
 
 ## Authenticator <-> Authorization Service (V <-> W) {#V-W}
 
-It is assumed that V and W have set up a secure connection, W has accessed the authentication credential CRED_V to be used in the EDHOC session between V and with U, and that W has verified that V is in possession of the private key corresponding to CRED_V, see {{domain-auth}} and {{authz-server}}.
+It is assumed that V and W have set up a secure connection, W has accessed the authentication credential CRED\_V to be used in the EDHOC session between V and with U, and that W has verified that V is in possession of the private key corresponding to CRED\_V, see {{domain-auth}} and {{authz-server}}.
 
-V and W run the Voucher Request/Response protocol over the secure connection. The hash of EDHOC message_1, H(message_1), acts as session identifier and binds together instances of the two protocols (U<->V and V<->W).
+V and W run the Voucher Request/Response protocol over the secure connection. The hash of EDHOC message\_1, H(message\_1), acts as session identifier and binds together instances of the two protocols (U<->V and V<->W).
 
-### Voucher Request {#voucher_request}
+### Voucher Request {#voucher-request}
 
 #### Processing in V
 
-V uses H(message_1) as a session identifier associated to this connection with W. If the same value of H(message_1) is already used for a connection with this or other W, the protocol SHALL be discontinued.
+V uses H(message\_1) as a session identifier associated to this connection with W. If the same value of H(message\_1) is already used for a connection with this or other W, the protocol SHALL be discontinued.
 
-V sends the voucher request to W. The Voucher Request SHALL be the CBOR array \[false, message_1\] where "false" is the CBOR simple value with encoding 0xf4.
+V sends the voucher request to W. The Voucher Request SHALL be the CBOR array \[false, message\_1\] where "false" is the CBOR simple value with encoding 0xf4.
 
-
-#### Processing in W
-
-W receives and parses the voucher request received over the secure connection with V. The voucher request essentially contains EDHOC message_1 as sent by U to V. W SHALL NOT process message_1 as if it was an EDHOC message intended for W.
-
-W extracts from message_1:
-
-* SS - the selected cipher suite, which is the (last) integer of SUITES_I.
-* G_X - the ephemeral public key of U
-* ENC_ID - the encryption of the device identifier ID_U, contained in the Voucher_Info field of the EAD item with ead_label = TBD1 (with minus sign indicating criticality)
-
-W verifies and decrypts ENC_ID using the relevant algorithms of the selected cipher suite SS (see {{reuse}}), and obtains ID_U.
-
-W calculates the hash of message_1 H(message_1), and associates this session identifier to the device identifier ID_U. If H(message_1) is not unique among session identifiers associated to this device identifier of U, the protocol SHALL be discontinued.
-
-W uses ID_U to look up the associated authorization policies for U and enforces them. This is out of scope for the specification.
-
-### Voucher Response {#voucher_response}
 
 #### Processing in W
 
-W retrieves CRED_V associated to the secure connection with V, and constructs the the Voucher for the device with identifier ID_U (see {{voucher}}).
+W receives and parses the voucher request received over the secure connection with V. The voucher request essentially contains EDHOC message\_1 as sent by U to V. W SHALL NOT process message\_1 as if it was an EDHOC message intended for W.
 
-W generates the voucher response and sends it to V over the secure connection. The Voucher_Response SHALL be a CBOR array as defined below:
+W extracts from message\_1:
+
+* SS - the selected cipher suite, which is the (last) integer of SUITES\_I.
+* G\_X - the ephemeral public key of U
+* ENC\_ID - the encryption of the device identifier ID\_U, contained in the Voucher\_Info field of the EAD item with ead\_label = TBD1 (with minus sign indicating criticality)
+
+W verifies and decrypts ENC\_ID using the relevant algorithms of the selected cipher suite SS (see {{reuse}}), and obtains ID\_U.
+
+W calculates the hash of message\_1 H(message\_1), and associates this session identifier to the device identifier ID\_U. If H(message\_1) is not unique among session identifiers associated to this device identifier of U, the protocol SHALL be discontinued.
+
+W uses ID\_U to look up the associated authorization policies for U and enforces them. This is out of scope for the specification.
+
+### Voucher Response {#voucher-response}
+
+#### Processing in W
+
+W retrieves CRED\\_V associated to the secure connection with V, and constructs the the Voucher for the device with identifier ID\_U (see {{voucher}}).
+
+W generates the voucher response and sends it to V over the secure connection. The Voucher\_Response SHALL be a CBOR array as defined below:
 
 ~~~~~~~~~~~
-Voucher_Response = [
-    H(message_1):   bstr,
+Voucher\_Response = [
+    H(message\_1):   bstr,
     Voucher:        bstr
 ]
 ~~~~~~~~~~~
 
 where
 
-* H(message_1) is the session identifier.
+* H(message\_1) is the session identifier.
 * The Voucher is defined in {{voucher}}.
 
 #### Processing in V
 
-V receives the voucher response from W over the secure connection. If the received session identifier does not match a session identifier H(message_1) associated to the secure connection, the protocol SHALL be discontinued.
+V receives the voucher response from W over the secure connection. If the received session identifier does not match a session identifier H(message\_1) associated to the secure connection, the protocol SHALL be discontinued.
 
 # REST Interface at W
 
 The interaction between V and W is enabled through a RESTful interface exposed by W.
-V SHOULD access the resources exposed by W through the protocol indicated by the scheme in LOC_W URI.
+V SHOULD access the resources exposed by W through the protocol indicated by the scheme in LOC\_W URI.
 In case the scheme indicates "https", V SHOULD perform a TLS handshake with W and use HTTP.
 In case the scheme indicates "coaps", V SHOULD perform a DTLS handshake with W and access the same resources using CoAP.
-In both cases, V MUST perform client authentication to authenticate to W, using a certificate containing the PK_V public key.
+In both cases, V MUST perform client authentication to authenticate to W, using a certificate containing the PK\_V public key.
 
 ## HTTP URIs
 
@@ -551,9 +552,9 @@ Each operation specified in the following is indicated by a path-suffix.
 To request a voucher, V MUST issue an HTTP request:
 
 * Method is POST
-* Payload is the serialization of the Voucher Request object, as specified in {{voucher_request}}.
+* Payload is the serialization of the Voucher Request object, as specified in {{voucher-request}}.
 
-In case of successful processing at W, W MUST issue a 200 OK response with payload containing the serialized Voucher Response object, as specified in {{voucher_response}}.
+In case of successful processing at W, W MUST issue a 200 OK response with payload containing the serialized Voucher Response object, as specified in {{voucher-response}}.
 
 ## Certificate Request (/certrequest)
 
@@ -561,21 +562,21 @@ V requests the public key certificate of U from W through the "/certrequest" pat
 To request U's authentication credential, V MUST issue an HTTP request:
 
 * Method is POST
-* Payload is the serialization of the ID_CRED_I object, as received in EDHOC message_3.
+* Payload is the serialization of the ID\_CRED\_I object, as received in EDHOC message\_3.
 
-In case of a successful lookup of the authentication credential at W, W MUST issue 200 OK response with payload containing the serialized CRED_U.
+In case of a successful lookup of the authentication credential at W, W MUST issue 200 OK response with payload containing the serialized CRED\_U.
 
 # Security Considerations  {#sec-cons}
 
 This specification builds on and reuses many of the security constructions of EDHOC, e.g., shared secret calculation and key derivation. The security considerations of EDHOC {{I-D.ietf-lake-edhoc}} apply with modifications discussed here.
 
-EDHOC provides identity protection of the Initiator, here the device. The encryption of the device identifier ID_U in the first message should consider potential information leaking from the length of ID_U, either by making all identifiers having the same length or the use of a padding scheme.
+EDHOC provides identity protection of the Initiator, here the device. The encryption of the device identifier ID\_U in the first message should consider potential information leaking from the length of ID\_U, either by making all identifiers having the same length or the use of a padding scheme.
 
-Although W learns about the identity of U after receiving VREQ, this information must not be disclosed to V, until U has revealed its identity to V with ID_CRED_I in message_3. W may be used for lookup of CRED_U from ID_CRED_I, or this credential lookup function may be separate from the authorization function of W, see {{fig-protocol}}. The trust model used here is that U decides to which V it reveals its identity. In an alternative trust model where U trusts W to decide to which V it reveals U's identity, CRED_U could be sent in Voucher Response.
+Although W learns about the identity of U after receiving VREQ, this information must not be disclosed to V, until U has revealed its identity to V with ID\_CRED\_I in message\_3. W may be used for lookup of CRED\_U from ID\_CRED\_I, or this credential lookup function may be separate from the authorization function of W, see {{fig-protocol}}. The trust model used here is that U decides to which V it reveals its identity. In an alternative trust model where U trusts W to decide to which V it reveals U's identity, CRED\_U could be sent in Voucher Response.
 
- As noted in {{Section 8.2 of I-D.ietf-lake-edhoc}} an ephemeral key may be used to calculate several ECDH shared secrets. In this specification the ephemeral key G_X is also used to calculate G_XW, the shared secret with the authorization service.
+ As noted in {{Section 8.2 of I-D.ietf-lake-edhoc}} an ephemeral key may be used to calculate several ECDH shared secrets. In this specification the ephemeral key G\_X is also used to calculate G\_XW, the shared secret with the authorization service.
 
-The private ephemeral key is thus used in the device for calculations of key material relating to both the authenticator and the authorization service. There are different options for where to implement these calculations, one option is as an addition to EDHOC, i.e., to extend the EDHOC API in the device with input of public key of W (G_W) and device identifier of U (ID_U), and produce the encryption of ID_U which is included in Voucher_Info in EAD_1.
+The private ephemeral key is thus used in the device for calculations of key material relating to both the authenticator and the authorization service. There are different options for where to implement these calculations, one option is as an addition to EDHOC, i.e., to extend the EDHOC API in the device with input of public key of W (G\_W) and device identifier of U (ID\_U), and produce the encryption of ID\_U which is included in Voucher\_Info in EAD\_1.
 
 # IANA Considerations  {#iana}
 
@@ -583,7 +584,7 @@ The private ephemeral key is thus used in the device for calculations of key mat
 
 IANA has registered the following entry in the "EDHOC External Authorization Data" registry under the group name "Ephemeral Diffie-
    Hellman Over COSE (EDHOC)".
-The ead_label = TBD_1 corresponds to the ead_value Voucher_Info in EAD_1, and Voucher in EAD_2 with processing specified in {{m1}} and {{m2}}, respectively, of this document.
+The ead\_label = TBD\_1 corresponds to the ead\_value Voucher\_Info in EAD\_1, and Voucher in EAD\_2 with processing specified in {{m1}} and {{m2}}, respectively, of this document.
 
 | Label | Value Type | Description |
 | TBD1 | bstr | Voucher related information |
@@ -659,7 +660,7 @@ For simplicity, {{fig-cojp}} illustrates the case when the device and the domain
 
 ### Flight 1
 
-Once the device has discovered the network it wants to join, it constructs the EDHOC message_1, as described in {{U-V}}.
+Once the device has discovered the network it wants to join, it constructs the EDHOC message\_1, as described in {{U-V}}.
 The device SHALL map the message to a CoAP request:
 
 * The request method is POST.
@@ -668,27 +669,27 @@ The device SHALL map the message to a CoAP request:
 * The Uri-Host option is set to "lake-authz.arpa". This is an anycast type of identifier of the domain authenticator (V) that is resolved to its IPv6 address by the Join Proxy.
 * The Uri-Path option is set to ".well-known/edhoc".
 * The Content-Format option is set to "application/cid-edhoc+cbor-seq"
-* The payload is the (true, EDHOC message_1) CBOR sequence, where EDHOC message_1 is constructed as defined in {{U-V}}.
+* The payload is the (true, EDHOC message\_1) CBOR sequence, where EDHOC message\_1 is constructed as defined in {{U-V}}.
 
 ### Flight 2
 
-The domain authenticator receives message_1 and processes it as described in {{U-V}}.
+The domain authenticator receives message\_1 and processes it as described in {{U-V}}.
 The message triggers the exchange with the authorization service, as described in {{V-W}}.
-If the exchange between V and W completes successfully, the domain authenticator prepares EDHOC message_2, as described in {{U-V}}.
+If the exchange between V and W completes successfully, the domain authenticator prepares EDHOC message\_2, as described in {{U-V}}.
 The authenticator SHALL map the message to a CoAP response:
 
 * The response code is 2.04 Changed.
 * The Content-Format option is set to "application/edhoc+cbor-seq"
-* The payload is the EDHOC message_2, as defined in {{U-V}}.
+* The payload is the EDHOC message\_2, as defined in {{U-V}}.
 
 ### Flight 3
 
-The device receives EDHOC message_2 and processes it as described in {{U-V}}}.
-Upon successful processing of message_2, the device prepares flight 3, which is an OSCORE-protected CoJP request containing an EDHOC message_3, as described in {{I-D.ietf-core-oscore-edhoc}}.
-EDHOC message_3 is prepared as described in {{U-V}}.
+The device receives EDHOC message\_2 and processes it as described in {{U-V}}}.
+Upon successful processing of message\_2, the device prepares flight 3, which is an OSCORE-protected CoJP request containing an EDHOC message\_3, as described in {{I-D.ietf-core-oscore-edhoc}}.
+EDHOC message\_3 is prepared as described in {{U-V}}.
 The OSCORE-protected payload is the CoJP Join Request object specified in {{Section 8.4.1 of RFC9031}}.
 OSCORE protection leverages the OSCORE Security Context derived from the EDHOC exchange, as specified in Appendix A of {{I-D.ietf-lake-edhoc}}.
-To that end, {{I-D.ietf-core-oscore-edhoc}} specifies that the Sender ID of the client (device) must be set to the connection identifier selected by the domain authenticator, C_R.
+To that end, {{I-D.ietf-core-oscore-edhoc}} specifies that the Sender ID of the client (device) must be set to the connection identifier selected by the domain authenticator, C\_R.
 OSCORE includes the Sender ID as the kid in the OSCORE option.
 The network identifier in the CoJP Join Request object is set to the network identifier obtained from the network discovery phase.
 In case of IEEE 802.15.4 networks, this is the PAN ID.
@@ -701,7 +702,7 @@ The device SHALL map the message to a CoAP request:
 * The Uri-Host option is set to "lake-authz.arpa".
 * The Uri-Path option is set to ".well-known/edhoc".
 * The EDHOC option {{I-D.ietf-core-oscore-edhoc}} is set and is empty.
-* The payload is prepared as described in {{Section 3.2 of I-D.ietf-core-oscore-edhoc}}, with EDHOC message_3 and the CoJP Join Request object as the OSCORE-protected payload.
+* The payload is prepared as described in {{Section 3.2 of I-D.ietf-core-oscore-edhoc}}, with EDHOC message\_3 and the CoJP Join Request object as the OSCORE-protected payload.
 
 Note that the OSCORE Sender IDs are derived from the connection identifiers of the EDHOC exchange.
 This is in contrast with {{RFC9031}} where ID Context of the OSCORE Security Context is set to the device identifier (pledge identifier).
@@ -712,5 +713,64 @@ The authenticator playing the role of the {{RFC9031}} JRC obtains the device ide
 
 Flight 4 is the OSCORE response carrying CoJP response message.
 The message is processed as specified in {{Section 8.4.2 of RFC9031}}.
+
+# Scaling considerations for Registrar (V)
+
+{{?I-D.richardson-anima-registrar-considerations}} describes a number of models for implementation of the Domain Authenticator (V, or Registrar) function.
+Some of the architecture detail are replicated here with some updates to terminology.
+
+~~~~ ARCHVIEW
+                  .------------.
+                  |    MASA/W  |
+                  |  Interface |  northbound interface (Vn)
+                  | BRSKI-MASA |
+                  '------------'
+                         ^
+                         |
+ .------------.          |           .---------------.
+ | management |    .----------.      | certification |
+ | interface  |<---| database |----->|   authority   |
+ '------------'    '----------'      '---------------'
+                         |
+                         |
+                         v
+.------------.     .-----------.
+| Join Proxy |     | Pledge/V  |--.
+|------------|     | Interface |  |  southbound interface (Vs)
+| GRASP      |     |   EDHOC   |  |
+| (DULL)     |     '-----------'  |
+'------------'        '-----------'
+~~~~
+{:scalableArchitect #authenticator title="Reference Internal Architecture for Domain Authenticator"}
+
+A key aspect of this architecture is that the southbound process can be horizontally scaled to accomodate the required number of onboarding sessions.
+Onboarding a large number (multiple tens of thousand of devices) across a diversity of different networks may require more compute power than is available in a single platform.
+Requirements for availability may also mandate that the onboarding system be highly available, spread across multiple physical systems, on different electrical circuits and/or network connections.
+
+As explained in section {{domain-auth}}, each Pledge-interface system on the southbound may have a unique ID\_CRED\_U.
+Sharing the secret among interfaces is not a wise cryptographic choice, and as that credential has long-term value to an attacker, it would be best if it was stored in a secure element (HSM, TPM, etc.).
+
+It is therefore necessary when building this system that any proof-of-posesssion that V must do to W, occur in a way that can be safely stored into the database.
+
+~~~~~~~~~~~ aasvg
+U                              Vs   Db   Vn                         W
+|                              |    |     |                         |
+|                              |    |     |                         |
+|                              |    |     |                         |
++----------------------------->|    |     |                         |
+|          EDHOC message_1     |    |     |                         |
+|                              |--->|     |                         |
+|                              |    |---->|                         |
+|                              |    |     +------------------------>|
+|                              |    |     |  Voucher Request (VREQ) |
+|                              |    |     |<------------------------+
+|                              |    |     | Voucher Response (VRES) |
+|                              |    |<----|                         |
+|                              |<---|     |                         |
+|<-----------------------------+    |     |                         |
+|          EDHOC message_2     |    |     |                         |
+~~~~~~~~~~~
+{: #fig-scaledV title="Example of database intermediary in scaled V" artwork-align="center"}
+
 
 --- fluff
