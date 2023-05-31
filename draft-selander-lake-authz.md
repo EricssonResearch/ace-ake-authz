@@ -1,5 +1,5 @@
 ---
-title: Lightweight Authorization for EDHOC
+title: Lightweight Zero-Touch Authorization using EDHOC
 docname: draft-selander-lake-authz-latest
 
 ipr: trust200902
@@ -103,7 +103,8 @@ venue:
 
 --- abstract
 
-This document describes a procedure for augmenting the lightweight authenticated Diffie-Hellman key exchange protocol EDHOC with third party assisted authorization, targeting constrained IoT deployments (RFC 7228).
+This document describes a zero-touch mechanism for onboarding new devices to a constrained network using the Ephemeral Diffie-Hellman Over COSE.  The protocol defined within leverages trust anchors installed at manufacturer time, providing assisted authorization.
+The high-level model is similiar to RFC8995 (BRSKI).
 
 --- middle
 
