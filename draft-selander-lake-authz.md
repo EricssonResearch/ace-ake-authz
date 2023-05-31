@@ -263,24 +263,24 @@ The protocol consist of three security sessions going on in parallel:
          |                               |                                  |
 +------------------------------------------------------------------------------------+
 |        |                               |                                  |        |
-|        |        EDHOC message\_1        |                                  |        |
+|        |        EDHOC message_1        |                                  |        |
 |        +------------------------------>|                                  |        |
-|        |    (EAD\_1 = LOC\_W, ENC\_ID)    |                                  |        |
+|        |    (EAD_1 = LOC_W, ENC_ID)    |                                  |        |
 |        |                               |                                  |        |
 |        |                               |     Voucher Request (VREQ)       |        |
 |        |                               +--------------------------------->|        |
-|        |                               |    (wrapped EDHOC message\_1)     |        |
+|        |                               |    (wrapped EDHOC message_1)     |        |
 |        |                               |                                  |        |
 |        |                               |     Voucher Response (VRES)      |        |
 |        |                               |<---------------------------------+        |
 |        |                               |            (Voucher)             |        |
 |        |                               |                                  |        |
-|        |        EDHOC message\_2        |                                  |        |
+|        |        EDHOC message_2        |                                  |        |
 |        |<------------------------------+                                  |        |
-|        |       (EAD\_2 = Voucher)       |                                  |        |
+|        |       (EAD_2 = Voucher)       |                                  |        |
 |        |                               |                                  |        |
 |        |                               |                                  |        |
-|        |        EDHOC message\_3        |                                  |        |
+|        |        EDHOC message_3        |                                  |        |
 |        +------------------------------>|                                  |        |
 |        |                               |                                  |        |
 +------------------------------------------------------------------------------------+
@@ -288,10 +288,10 @@ The protocol consist of three security sessions going on in parallel:
          |                               |                              Credential
          |                               |                               Database
          |                               |                                  |
-         |                               |     ID\_CRED\_I from message\_3     |
+         |                               |     ID_CRED_I from message_3     |
          |                               +---  ---  ---  ---   ---  ---  -->|
          |                               |<--  ---  ---  ---   ---  ---  ---+
-         |                               |              CRED\_U              |
+         |                               |              CRED_U              |
          |                               |                                  |
 
 ~~~~~~~~~~~
@@ -331,7 +331,7 @@ The output keying material OKM is derived from PRK using EDHOC-Expand(), which i
 
 ~~~~~~~~~
 info = (
-   info\_label : int,
+   info_label : int,
    context : bstr,
    length : uint,
 )
@@ -346,13 +346,13 @@ The protocol between U and W is carried between U and V in message\_1 and messag
 The external authorization data EAD\_1 contains an EAD item with ead\_label = TBD1 and ead\_value = Voucher\_Info, which is a CBOR byte string:
 
 ~~~~~~~~~~~
-Voucher\_Info = bstr .cbor Voucher\_Info\_Seq
+Voucher_Info = bstr .cbor Voucher_Info_Seq
 ~~~~~~~~~~~
 
 ~~~~~~~~~~~
-Voucher\_Info\_Seq = (
-    LOC\_W:      tstr,
-    ENC\_ID:     bstr
+Voucher_Info_Seq = (
+    LOC_W:      tstr,
+    ENC_ID:     bstr
 )
 ~~~~~~~~~~~
 
@@ -369,11 +369,11 @@ ENC\_ID is 'ciphertext' of COSE\_Encrypt0 ({{Section 5.2 of RFC9052}}) computed
 
 ~~~~~~~~~~~
 plaintext = (
-    ID\_U:            bstr,
+    ID_U:            bstr,
  )
 ~~~~~~~~~~~
 ~~~~~~~~~~~
-external\_aad = (
+external_aad = (
     SS:              int,
  )
 ~~~~~~~~~~~
@@ -417,9 +417,9 @@ The voucher is calculated with the following input to the info struct (see {{reu
 where context is a CBOR byte string wrapping of the following CBOR sequence:
 
 ~~~~~~~~~~~
-voucher\_input = (
-    H(message\_1):  bstr,
-    CRED\_V:        bstr,
+voucher_input = (
+    H(message_1):  bstr,
+    CRED_V:        bstr,
 )
 ~~~~~~~~~~~
 
@@ -622,17 +622,17 @@ U                                    V                              W
 |          Network discovery         |                              |
 |                                    |                              |
 +----------------------------------->|                              |
-|          EDHOC message\_1           |                              |
+|          EDHOC message_1           |                              |
 |                                    +----------------------------->|
 |                                    |    Voucher Request (VREQ)    |
 |                                    |<-----------------------------+
 |                                    |    Voucher Response (VRES)   |
 |<-----------------------------------+                              |
-|          EDHOC message\_2           |                              |
+|          EDHOC message_2           |                              |
 |                                    |                              |
 |                                    |                              |
 +----------------------------------->|                              |
-|   EDHOC message\_3 + CoJP request   |                              |
+|   EDHOC message_3 + CoJP request   |                              |
 |                                    |                              |
 +<-----------------------------------|                              |
 |            CoJP response           |                              |
