@@ -1,0 +1,464 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-12-23T00:38:17.415358+00:00",
+  "repo": "EricssonResearch/ace-ake-authz",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzc3NzAwNzk2",
+      "title": "some edits to the intro to clarify motivations",
+      "url": "https://github.com/EricssonResearch/ace-ake-authz/pull/1",
+      "state": "MERGED",
+      "author": "mcr",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-02-20T11:25:49Z",
+      "updatedAt": "2020-02-21T14:32:04Z",
+      "baseRepository": "EricssonResearch/ace-ake-authz",
+      "baseRefName": "master",
+      "baseRefOid": "d678a72892d60371eac33d1c3759a54b2ad3712c",
+      "headRepository": "EricssonResearch/ace-ake-authz",
+      "headRefName": "mcr-edits",
+      "headRefOid": "a305092d34cb5db495ef6ab951b7173c20c12042",
+      "closedAt": "2020-02-21T14:32:03Z",
+      "mergedAt": "2020-02-21T14:32:03Z",
+      "mergedBy": "gselander",
+      "mergeCommit": {
+        "oid": "7c82a554203a6d0e501fb1aeab504787bee8f70d"
+      },
+      "comments": [
+        {
+          "author": "gselander",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm fine with merging this.",
+          "createdAt": "2020-02-20T12:46:27Z",
+          "updatedAt": "2020-02-20T12:46:27Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzc4MzExNjIz",
+      "title": "Minor change to EAP relationship",
+      "url": "https://github.com/EricssonResearch/ace-ake-authz/pull/2",
+      "state": "MERGED",
+      "author": "mcr",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-02-21T14:32:06Z",
+      "updatedAt": "2020-10-13T13:38:21Z",
+      "baseRepository": "EricssonResearch/ace-ake-authz",
+      "baseRefName": "mcr-edits",
+      "baseRefOid": "a305092d34cb5db495ef6ab951b7173c20c12042",
+      "headRepository": "EricssonResearch/ace-ake-authz",
+      "headRefName": "mcr-edits2",
+      "headRefOid": "a090bc362fcbe5e5788db2a09421998340fdc90f",
+      "closedAt": "2020-02-21T14:33:30Z",
+      "mergedAt": "2020-02-21T14:33:30Z",
+      "mergedBy": "gselander",
+      "mergeCommit": {
+        "oid": "acc51cad8c834dfb6e46072c118e022fdf0f8da4"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "MDExOlB1bGxSZXF1ZXN0MzgzNTE5NTM1",
+      "title": "Edits by Aurelio",
+      "url": "https://github.com/EricssonResearch/ace-ake-authz/pull/3",
+      "state": "MERGED",
+      "author": "AuSchell",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "inserted new figure with more details, detailed verification of message 3, added myself as author",
+      "createdAt": "2020-03-04T12:19:29Z",
+      "updatedAt": "2020-10-13T13:36:54Z",
+      "baseRepository": "EricssonResearch/ace-ake-authz",
+      "baseRefName": "master",
+      "baseRefOid": "7c82a554203a6d0e501fb1aeab504787bee8f70d",
+      "headRepository": "EricssonResearch/ace-ake-authz",
+      "headRefName": "edit_aurelio",
+      "headRefOid": "b017ed42246eb9a9cda16de4a18e720324d9f991",
+      "closedAt": "2020-03-09T10:00:40Z",
+      "mergedAt": "2020-03-09T10:00:40Z",
+      "mergedBy": "gselander",
+      "mergeCommit": {
+        "oid": "6951aa9eda1ecda8d58a2754ad21f85c68dbc80e"
+      },
+      "comments": [
+        {
+          "author": "gselander",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I merge this and then make editorial changes in the master branch.",
+          "createdAt": "2020-03-09T10:00:32Z",
+          "updatedAt": "2020-03-09T10:00:32Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzg0OTI3MzI4",
+      "title": "Initial text on mapping to ACE.",
+      "url": "https://github.com/EricssonResearch/ace-ake-authz/pull/4",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-03-06T17:01:57Z",
+      "updatedAt": "2020-10-13T13:38:40Z",
+      "baseRepository": "EricssonResearch/ace-ake-authz",
+      "baseRefName": "master",
+      "baseRefOid": "7c82a554203a6d0e501fb1aeab504787bee8f70d",
+      "headRepository": "EricssonResearch/ace-ake-authz",
+      "headRefName": "mapping-ace",
+      "headRefOid": "c2ffdac465109ded5d1ce92c6b6dffb56eb6c0bb",
+      "closedAt": "2020-03-09T09:59:13Z",
+      "mergedAt": "2020-03-09T09:59:13Z",
+      "mergedBy": "gselander",
+      "mergeCommit": {
+        "oid": "0338189222be278a7ea85ac13fc97a95750e5add"
+      },
+      "comments": [
+        {
+          "author": "gselander",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I made changes where Michael commented.",
+          "createdAt": "2020-03-09T09:58:49Z",
+          "updatedAt": "2020-03-09T09:58:49Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks, I was just about to address those!",
+          "createdAt": "2020-03-09T10:01:43Z",
+          "updatedAt": "2020-03-09T10:01:43Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzcwNjQxMDM2",
+          "commit": {
+            "abbreviatedOid": "5d5ad04"
+          },
+          "author": "mcr",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-03-06T21:35:32Z",
+          "updatedAt": "2020-03-06T21:35:32Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "I would rather we wrote: \"AS issues an object to C that is ...  It is encoded using the Bearer Token container.\"",
+              "createdAt": "2020-03-06T21:35:32Z",
+              "updatedAt": "2020-03-09T09:56:48Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzcwNjQxNDAx",
+          "commit": {
+            "abbreviatedOid": "5d5ad04"
+          },
+          "author": "mcr",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-06T21:36:15Z",
+          "updatedAt": "2020-03-06T21:37:16Z",
+          "comments": [
+            {
+              "originalPosition": 59,
+              "body": "The Protocol that..",
+              "createdAt": "2020-03-06T21:36:15Z",
+              "updatedAt": "2020-03-09T09:56:48Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDODfrSLc4tSJX0",
+      "title": "clarify the roles, make it a list",
+      "url": "https://github.com/EricssonResearch/ace-ake-authz/pull/5",
+      "state": "MERGED",
+      "author": "mcr",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-16T22:22:50Z",
+      "updatedAt": "2021-10-19T12:48:04Z",
+      "baseRepository": "EricssonResearch/ace-ake-authz",
+      "baseRefName": "master",
+      "baseRefOid": "57f9c6c704ce432c9a4f378a1916a4f2cbd5b3e8",
+      "headRepository": "EricssonResearch/ace-ake-authz",
+      "headRefName": "label-diagram-better",
+      "headRefOid": "1e96a379dcb1e554b70e900bbf0d5cbf4dc19cdd",
+      "closedAt": "2021-10-19T12:48:03Z",
+      "mergedAt": "2021-10-19T12:48:03Z",
+      "mergedBy": "gselander",
+      "mergeCommit": {
+        "oid": "eac863e1b60672b911a864079ce1340053d3eadd"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDODfrSLc4teufO",
+      "title": "Mitigate misbehaving V attack and update ACE profile",
+      "url": "https://github.com/EricssonResearch/ace-ake-authz/pull/6",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "PR includes:\r\n* Alignment of ACE profile\r\n* Mitigation of the misbehaving V attack\r\n* Nits",
+      "createdAt": "2021-10-21T08:30:36Z",
+      "updatedAt": "2021-10-22T08:41:34Z",
+      "baseRepository": "EricssonResearch/ace-ake-authz",
+      "baseRefName": "master",
+      "baseRefOid": "b951a29346f5adbb88e461de65ea44a9db148cb9",
+      "headRepository": "EricssonResearch/ace-ake-authz",
+      "headRefName": "misbehaving_v",
+      "headRefOid": "1b266c36780eefe7385c58e6b31abd213876d7f0",
+      "closedAt": "2021-10-22T08:41:34Z",
+      "mergedAt": "2021-10-22T08:41:34Z",
+      "mergedBy": "gselander",
+      "mergeCommit": {
+        "oid": "c199099dae54a13de3f0978d4c369f86c365c79f"
+      },
+      "comments": [
+        {
+          "author": "gselander",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@malishav @AuSchell  I've proposed some updates, please review.",
+          "createdAt": "2021-10-22T07:33:02Z",
+          "updatedAt": "2021-10-22T07:33:02Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDODfrSLc4u0NI3",
+          "commit": {
+            "abbreviatedOid": "41e4f4d"
+          },
+          "author": "AuSchell",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-21T09:25:45Z",
+          "updatedAt": "2021-10-21T09:25:45Z",
+          "comments": [
+            {
+              "originalPosition": 154,
+              "body": "Maybe we could be more \"softer\" in our definition of what ID_V should exactly be, and define it as more of a token which W is able to verify independently. It can be (probaly strongly advised to be) the public key certificate of V, but not all protocols will be able to provide one, so it could be something protocol specific, like public network information, network tokens, etc.  ",
+              "createdAt": "2021-10-21T09:25:45Z",
+              "updatedAt": "2021-10-21T09:25:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODfrSLc4u4JhT",
+          "commit": {
+            "abbreviatedOid": "41e4f4d"
+          },
+          "author": "gselander",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-22T06:31:10Z",
+          "updatedAt": "2021-10-22T06:31:10Z",
+          "comments": [
+            {
+              "originalPosition": 154,
+              "body": "ID_V is data that W can use to identify V (so that it is not V' which is also authorized but U isn't connected to). \r\n\r\n(The first question is how U securely identifies V in, say, an extended beacon, could that not be spoofed? We assume U can identify V in the following.)\r\n\r\nWe write in section 3.2:\r\n> The domain authenticator may in principle use differents credentials for authenticating to the  authorization server and to the device, for which PK_V is used.\r\n\r\nSo in the general case V may use something other than PK_V to authenticate to W. Moreover, to identify V it must be unique and securely associated to the public key V uses with W, for which a CCS may not be sufficient (in contrast to what V presents to U, since U will have access to a voucher which can be used to verify a CCS). \r\n\r\nIn the meeting I think we mentioned ID_V could be a common name in subject or subject alt name in a certificate that V will use to authenticate to W. The name need to come from a specific name space agreed out of band and managed by a CA trusted by W. \r\n\r\nDo we want to formulate such an example or have a more general text (or both)? I will try to formulate something that you can review. More comments welcome.\r\n\r\n\r\n",
+              "createdAt": "2021-10-22T06:31:10Z",
+              "updatedAt": "2021-10-22T06:31:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODfrSLc4u4M92",
+          "commit": {
+            "abbreviatedOid": "41e4f4d"
+          },
+          "author": "gselander",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-22T06:53:31Z",
+          "updatedAt": "2021-10-22T06:53:31Z",
+          "comments": [
+            {
+              "originalPosition": 184,
+              "body": "This may be a good idea, but I don't think it is necessary.",
+              "createdAt": "2021-10-22T06:53:31Z",
+              "updatedAt": "2021-10-22T06:53:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODfrSLc4u4Tp0",
+          "commit": {
+            "abbreviatedOid": "41e4f4d"
+          },
+          "author": "gselander",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-22T07:29:32Z",
+          "updatedAt": "2021-10-22T07:29:32Z",
+          "comments": [
+            {
+              "originalPosition": 331,
+              "body": "I think the identity protection properties discussed here should be focused on what is provided by this protocol, i.e. not the issues which a potential prior discovery mechanism causes. I'll try to formulate that.",
+              "createdAt": "2021-10-22T07:29:32Z",
+              "updatedAt": "2021-10-22T07:29:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODfrSLc4u4UbL",
+          "commit": {
+            "abbreviatedOid": "1b266c3"
+          },
+          "author": "malishav",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-22T07:33:16Z",
+          "updatedAt": "2021-10-22T07:33:17Z",
+          "comments": [
+            {
+              "originalPosition": 154,
+              "body": "> (The first question is how U securely identifies V in, say, an extended beacon, could that not be spoofed? We assume U can identify V in the following.)\r\n\r\nSo that is really technology specific and it's a good point that you brought it up. In 6TiSCH, enhanced beacons (EB) are authenticity-protected with a tag, but the key is not known to U until after it has joined the network. We had a similar chicken-and-egg problem in RFC9031 and we resolved this by having U attempt to join a network, remember the ID (ID_V in this case) and the EB content, and then once U has joined the network and obtained network link-layer keys, it verified the authenticity of the EB that triggered the join. Something similar could be done here but I don't think this level of technology-specific details belong to this draft.\r\n\r\n> So in the general case V may use something other than PK_V to authenticate to W. Moreover, to identify V it must be unique and securely associated to the public key V uses with W, for which a CCS may not be sufficient (in contrast to what V presents to U, since U will have access to a voucher which can be used to verify a CCS).\r\n\r\nYes, indeed, good point that CCS is not enough on the V-W segment.\r\n\r\n> In the meeting I think we mentioned ID_V could be a common name in subject or subject alt name in a certificate that V will use to authenticate to W. The name need to come from a specific name space agreed out of band and managed by a CA trusted by W.\r\n\r\nI wasn't sure on the cleanest way to do this given that CCS is used between V-U. \r\n",
+              "createdAt": "2021-10-22T07:33:16Z",
+              "updatedAt": "2021-10-22T07:33:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODfrSLc4u4U1X",
+          "commit": {
+            "abbreviatedOid": "1b266c3"
+          },
+          "author": "malishav",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-22T07:35:12Z",
+          "updatedAt": "2021-10-22T07:35:12Z",
+          "comments": [
+            {
+              "originalPosition": 331,
+              "body": "What is provided by the protocol directly spans from the use of optional paramaters defined in that protocol. The parameter we added is clearly discussed to be used jointly with the discovery mechanism so that is very linked IMO",
+              "createdAt": "2021-10-22T07:35:12Z",
+              "updatedAt": "2021-10-22T07:35:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODfrSLc4u4VUe",
+          "commit": {
+            "abbreviatedOid": "1b266c3"
+          },
+          "author": "malishav",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "this looks good to me, thanks for doing the pass",
+          "createdAt": "2021-10-22T07:37:31Z",
+          "updatedAt": "2021-10-22T07:40:44Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "looks good",
+              "createdAt": "2021-10-22T07:37:31Z",
+              "updatedAt": "2021-10-22T07:40:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODfrSLc4u4c_n",
+          "commit": {
+            "abbreviatedOid": "1b266c3"
+          },
+          "author": "AuSchell",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-22T08:11:02Z",
+          "updatedAt": "2021-10-22T08:11:03Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "looks good to me too",
+              "createdAt": "2021-10-22T08:11:03Z",
+              "updatedAt": "2021-10-22T08:11:03Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
