@@ -5,13 +5,13 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 3 December 2023                                      M. Vučinić
+Expires: 9 December 2023                                      M. Vučinić
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
                                                          A. Schellenbaum
                                                                     ZHAW
-                                                             1 June 2023
+                                                             7 June 2023
 
 
                   Lightweight Authorization for EDHOC
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 December 2023.
+   This Internet-Draft will expire on 9 December 2023.
 
 Copyright Notice
 
@@ -801,8 +801,8 @@ Table of Contents
    *  Payload is the serialization of the Voucher Request object, as
       specified in Section 4.5.1.
 
-   *  Content-Format (Content-Type) is set to "application/fwd-
-      edhoc+cbor-seq"
+   *  Content-Format (Content-Type) is set to "application/lake-authz-
+      voucherrequest+cbor"
 
    In case of successful processing at W, W MUST issue a 200 OK response
    with payload containing the serialized Voucher Response object, as
@@ -901,14 +901,15 @@ Table of Contents
 
 7.4.  Media Types Registry
 
-   IANA has added the media types "application/fwd-edhoc+cbor-seq" to
-   the "Media Types" registry.
+   IANA has added the media types "application/lake-authz-
+   voucherrequest+cbor" to the "Media Types" registry.
 
-7.4.1.  application/fwd-edhoc+cbor-seq Media Type Registration
+7.4.1.  application/lake-authz-voucherrequest+cbor Media Type
+        Registration
 
    *  Type name: application
 
-   *  Subtype name: fwd-edhoc+cbor-seq
+   *  Subtype name: lake-authz-voucherrequest+cbor
 
    *  Required parameters: N/A
 
@@ -947,15 +948,15 @@ Table of Contents
 
 7.5.  CoAP Content-Formats Registry
 
-   IANA has added the media type "application/fwd-edhoc+cbor-seq" to the
-   "CoAP Content-Formats" registry under the registry group "Constrained
-   RESTful Environments (CoRE) Parameters".
+   IANA has added the media type "application/lake-authz-
+   voucherrequest+cbor" to the "CoAP Content-Formats" registry under the
+   registry group "Constrained RESTful Environments (CoRE) Parameters".
 
      +================================+==========+======+============+
      | Media Type                     | Encoding | ID   | Reference  |
      +================================+==========+======+============+
-     | application/fwd-edhoc+cbor-seq | -        | TBD2 | [[this     |
-     |                                |          |      | document]] |
+     | application/lake-authz-        | -        | TBD2 | [[this     |
+     | voucherrequest+cbor            |          |      | document]] |
      +--------------------------------+----------+------+------------+
 
            Table 2: Addition to the CoAP Content-Formats registry
