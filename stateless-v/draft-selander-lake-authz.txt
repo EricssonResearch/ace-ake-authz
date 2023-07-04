@@ -5,13 +5,13 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 3 December 2023                                      M. Vučinić
+Expires: 5 January 2024                                       M. Vučinić
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
                                                          A. Schellenbaum
                                                                     ZHAW
-                                                             1 June 2023
+                                                             4 July 2023
 
 
                   Lightweight Authorization for EDHOC
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 December 2023.
+   This Internet-Draft will expire on 5 January 2024.
 
 Copyright Notice
 
@@ -468,7 +468,7 @@ Table of Contents
    specific parameter needed by V to respond to U.  At this point, V can
    drop the EDHOC session that was initiated by U.
 
-   V MUST encrypt and authenticate the encapsulated state using a
+   V MUST encrypt and integrity protect the encapsulated state using a
    uniformly-distributed (pseudo-)random key, known only to itself.  How
    V serializes and encrypts its internal state is out of scope of this
    specification.  For example, V may use the existing CBOR and COSE
@@ -760,9 +760,11 @@ Table of Contents
 
 4.6.2.2.  Processing in V
 
-   V receives the voucher response from W over the secure connection.  V
-   decrypts and verifies opaque_state, as received from W, and if
-   successful responds to U with EDHOC message_2.
+   V receives the voucher response from W over the secure connection.
+   If present, V decrypts and verifies opaque_state as received from W.
+   If that verification fails then EDHOC is discontinued.  If the
+   voucher response is successfully received from W, then V responds to
+   U with EDHOC message_2 as described in Section 4.5.2.1.
 
 5.  REST Interface at W
 
