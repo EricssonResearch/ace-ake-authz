@@ -11,7 +11,7 @@
 <meta content="Michael Richardson" name="author">
 <meta content="Aurelio Schellenbaum" name="author">
 <meta content="
-       This document describes a procedure for authorizing enrollment of new devices using the lightweight authenticated key exchange protocol Ephemeral Diffie-Hellman Over COSE (EDHOC). The procedure is applicable to zero-touch onboarding of new devices to a contrained network leveraging trust anchors installed at manufacture time. 
+       This document describes a procedure for authorizing enrollment of new devices using the lightweight authenticated key exchange protocol Ephemeral Diffie-Hellman Over COSE (EDHOC). The procedure is applicable to zero-touch onboarding of new devices to a constrained network leveraging trust anchors installed at manufacture time. 
     " name="description">
 <meta content="xml2rfc 3.17.4" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1102,7 +1102,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document describes a procedure for authorizing enrollment of new devices using the lightweight authenticated key exchange protocol Ephemeral Diffie-Hellman Over COSE (EDHOC). The procedure is applicable to zero-touch onboarding of new devices to a contrained network leveraging trust anchors installed at manufacture time.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document describes a procedure for authorizing enrollment of new devices using the lightweight authenticated key exchange protocol Ephemeral Diffie-Hellman Over COSE (EDHOC). The procedure is applicable to zero-touch onboarding of new devices to a constrained network leveraging trust anchors installed at manufacture time.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1365,13 +1365,13 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
                 <text x="376" y="84">Request</text>
                 <text x="52" y="100">Device</text>
                 <text x="260" y="100">Domain</text>
-                <text x="488" y="100">Authorization</text>
+                <text x="492" y="100">Enrollment</text>
                 <text x="264" y="116">Authenticator</text>
-                <text x="488" y="116">Service</text>
-                <text x="56" y="132">(U)</text>
+                <text x="492" y="116">Server</text>
+                <text x="48" y="132">(U)</text>
                 <text x="264" y="132">(V)</text>
                 <text x="376" y="132">Voucher</text>
-                <text x="496" y="132">(W)</text>
+                <text x="488" y="132">(W)</text>
                 <text x="380" y="148">Response</text>
                 <text x="144" y="180">Voucher</text>
               </g>
@@ -1442,12 +1442,12 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
                 <text x="148" y="132">con-</text>
                 <text x="260" y="132">Domain</text>
                 <text x="380" y="132">con-</text>
-                <text x="496" y="132">Authorization</text>
+                <text x="500" y="132">Enrollment</text>
                 <text x="152" y="148">stra-</text>
                 <text x="264" y="148">Authenticator</text>
                 <text x="384" y="148">stra-</text>
-                <text x="496" y="148">Service</text>
-                <text x="56" y="164">(U)</text>
+                <text x="500" y="148">Server</text>
+                <text x="48" y="164">(U)</text>
                 <text x="148" y="164">ined</text>
                 <text x="264" y="164">(V)</text>
                 <text x="380" y="164">ined</text>
