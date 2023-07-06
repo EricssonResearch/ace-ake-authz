@@ -14,15 +14,16 @@ Expires: 7 January 2024                                       M. Vučinić
                                                              6 July 2023
 
 
-                  Lightweight Authorization for EDHOC
+   Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE
                     draft-selander-lake-authz-latest
 
 Abstract
 
-   This document describes a procedure for augmenting the lightweight
-   authenticated Diffie-Hellman key exchange protocol EDHOC with third
-   party assisted authorization, targeting constrained IoT deployments
-   (RFC 7228).
+   This document describes a procedure for authorizing enrollment of new
+   devices using the lightweight authenticated key exchange protocol
+   Ephemeral Diffie-Hellman Over COSE (EDHOC).  The procedure is
+   applicable to zero-touch onboarding of new devices to a contrained
+   network leveraging trust anchors installed at manufacture time.
 
 About This Document
 
@@ -81,14 +82,14 @@ Table of Contents
    3.  Assumptions
      3.1.  Device (U)
      3.2.  Domain Authenticator (V)
-     3.3.  Authorization Service (W)
+     3.3.  Enrollment Server (W)
    4.  The Protocol
      4.1.  Overview
      4.2.  Reuse of EDHOC
      4.3.  Stateless Operation of V
-     4.4.  Device <-> Authorization Service (U <-> W)
+     4.4.  Device <-> Enrollment Server (U <-> W)
      4.5.  Device <-> Authenticator (U <-> V)
-     4.6.  Authenticator <-> Authorization Service (V <-> W)
+     4.6.  Authenticator <-> Enrollment Server (V <-> W)
    5.  REST Interface at W
      5.1.  Scheme "https"
      5.2.  Scheme "coaps"
@@ -120,22 +121,22 @@ Table of Contents
    with third party-assisted authorization.
 
    The procedure involves a device, a domain authenticator, and an
-   authorization service.  The device and domain authenticator perform
-   mutual authentication and authorization, assisted by the
-   authorization service which provides relevant authorization
-   information to the device (a "voucher") and to the authenticator.
+   enrollment server.  The device and domain authenticator perform
+   mutual authentication and authorization, assisted by the enrollment
+   server which provides relevant authorization information to the
+   device (a "voucher") and to the authenticator.  The high-level model
+   is similiar to BRSKI [RFC8995].
 
    In this document we consider the target interaction for which
    authorization is needed to be "enrollment", for example joining a
    network for the first time (e.g., [RFC9031]), but it can be applied
    to authorize other target interactions.
 
-   The authorization service may represent the manufacturer of the
-   device, or some other party with information about the device from
-   which a trust anchor has been pre-provisioned into the device.  The
-   (domain) authenticator may represent the service provider or some
-   other party controlling access to the network in which the device is
-   enrolling.
+   The enrollment server may represent the manufacturer of the device,
+   or some other party with information about the device from which a
+   trust anchor has been pre-provisioned into the device.  The (domain)
+   authenticator may represent the service provider or some other party
+   controlling access to the network in which the device is enrolling.
 
    The protocol assumes that authentication between device and
    authenticator is performed with EDHOC [I-D.ietf-lake-edhoc], and
@@ -172,8 +173,8 @@ Table of Contents
    The domain authenticator, in turn, authenticates the device and
    authorizes its enrollment into the domain.
 
-   The procedure is assisted by a (non-constrained) domain authorization
-   service (W) located in a non-constrained network behind the domain
+   The procedure is assisted by a (non-constrained) enrollment server
+   (W) located in a non-constrained network behind the domain
    authenticator, e.g. on the Internet, providing information to the
    device (the voucher) and to the domain authenticator as part of the
    protocol.
@@ -186,7 +187,7 @@ Table of Contents
    Note the cardinality of the involved parties, it is expected that the
    authenticator need to handle a large unspecified number of devices,
    but for a given device type or manufacturer it is expected that one
-   or a few nodes host authorization services.
+   or a few nodes host enrollment servers.
 
                    Voucher
                    Info
@@ -207,8 +208,8 @@ Table of Contents
 3.  Assumptions
 
    The protocol is based on the following pre-existing relations between
-   the device (U), the domain authenticator (V) and the authorization
-   service (W).
+   the device (U), the domain authenticator (V) and the enrollment
+   server (W).
 
    *  U and W have an explicit relation: U is configured with a public
       key of W, see Section 3.1.
@@ -258,10 +259,10 @@ Table of Contents
    U is also provisioned with information about W:
 
    *  A static public DH key of W (G_W) used to establish secure
-      communication with the authorization service (see Section 4.4).
+      communication with the enrollment server (see Section 4.4).
 
-   *  Location information about the authorization service (LOC_W) that
-      can be used by V to reach W.  This is typically a URI but may
+   *  Location information about the enrollment server (LOC_W) that can
+      be used by V to reach W.  This is typically a URI but may
       alternatively be only the domain name.
 
 3.2.  Domain Authenticator (V)
@@ -302,9 +303,9 @@ Table of Contents
    Other details of proof-of-possession related to CRED_V and transport
    of CRED_V are out of scope of this document.
 
-3.3.  Authorization Service (W)
+3.3.  Enrollment Server (W)
 
-   The authorization service (W) is assumed to have the private DH key
+   The enrollment server (W) is assumed to have the private DH key
    corresponding to G_W, which is used to establish secure communication
    with the device (see Section 4.4).  W provides to U the authorization
    decision for enrollment with V in the form of a voucher (see
@@ -334,12 +335,12 @@ Table of Contents
    1.  The EDHOC protocol between device (U) and (domain) authenticator
        (V)
 
-   2.  Voucher Request/Response between authenticator (V) and
-       authorization service (W)
+   2.  Voucher Request/Response between authenticator (V) and enrollment
+       server (W)
 
    3.  An exchange of voucher-related information, including the voucher
-       itself, between device (U) and authorization service (W),
-       mediated by the authenticator (V).
+       itself, between device (U) and enrollment server (W), mediated by
+       the authenticator (V).
 
    Figure 3 provides an overview of the message flow detailed in this
    section.  An outline of EDHOC is given in Section 3 of
@@ -485,7 +486,7 @@ Table of Contents
    initialize a new EDHOC session with U, based on the message and the
    state retrieved from the Voucher Response from W.
 
-4.4.  Device <-> Authorization Service (U <-> W)
+4.4.  Device <-> Enrollment Server (U <-> W)
 
    The protocol between U and W is carried between U and V in message_1
    and message_2 (Section 4.5), and between V and W in the Voucher
@@ -676,7 +677,7 @@ Table of Contents
    retrieve CRED_U from a Credential Database, after having learnt
    ID_CRED_I from U.
 
-4.6.  Authenticator <-> Authorization Service (V <-> W)
+4.6.  Authenticator <-> Enrollment Server (V <-> W)
 
    It is assumed that V and W have set up a secure connection, W has
    accessed the authentication credential CRED_V to be used in the EDHOC
@@ -884,15 +885,15 @@ Table of Contents
    As noted in Section 8.2 of [I-D.ietf-lake-edhoc] an ephemeral key may
    be used to calculate several ECDH shared secrets.  In this
    specification the ephemeral key G_X is also used to calculate G_XW,
-   the shared secret with the authorization service.
+   the shared secret with the enrollment server.
 
    The private ephemeral key is thus used in the device for calculations
-   of key material relating to both the authenticator and the
-   authorization service.  There are different options for where to
-   implement these calculations, one option is as an addition to EDHOC,
-   i.e., to extend the EDHOC API in the device with input of public key
-   of W (G_W) and device identifier of U (ID_U), and produce the
-   encryption of ID_U which is included in Voucher_Info in EAD_1.
+   of key material relating to both the authenticator and the enrollment
+   server.  There are different options for where to implement these
+   calculations, one option is as an addition to EDHOC, i.e., to extend
+   the EDHOC API in the device with input of public key of W (G_W) and
+   device identifier of U (ID_U), and produce the encryption of ID_U
+   which is included in Voucher_Info in EAD_1.
 
 7.  IANA Considerations
 
@@ -1097,6 +1098,11 @@ Table of Contents
               (URIs)", RFC 8615, DOI 10.17487/RFC8615, May 2019,
               <https://www.rfc-editor.org/info/rfc8615>.
 
+   [RFC8995]  Pritikin, M., Richardson, M., Eckert, T., Behringer, M.,
+              and K. Watsen, "Bootstrapping Remote Secure Key
+              Infrastructure (BRSKI)", RFC 8995, DOI 10.17487/RFC8995,
+              May 2021, <https://www.rfc-editor.org/info/rfc8995>.
+
    [RFC9031]  Vučinić, M., Ed., Simon, J., Pister, K., and M.
               Richardson, "Constrained Join Protocol (CoJP) for 6TiSCH",
               RFC 9031, DOI 10.17487/RFC9031, May 2021,
@@ -1194,7 +1200,7 @@ A.2.2.  Flight 2
 
    The domain authenticator receives message_1 and processes it as
    described in Section 4.5.  The message triggers the exchange with the
-   authorization service, as described in Section 4.6.  If the exchange
+   enrollment server, as described in Section 4.6.  If the exchange
    between V and W completes successfully, the domain authenticator
    prepares EDHOC message_2, as described in Section 4.5.  The
    authenticator SHALL map the message to a CoAP response:
