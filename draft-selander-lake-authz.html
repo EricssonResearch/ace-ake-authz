@@ -1055,7 +1055,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Selander, et al.</td>
-<td class="center">Expires 7 January 2024</td>
+<td class="center">Expires 8 January 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-selander-lake-authz-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-07-06" class="published">6 July 2023</time>
+<time datetime="2023-07-07" class="published">7 July 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-01-07">7 January 2024</time></dd>
+<dd class="expires"><time datetime="2024-01-08">8 January 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1139,7 +1139,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 January 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 January 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1324,7 +1324,7 @@ The domain authenticator, in turn, authenticates the device and authorizes its e
 <p id="section-2-2">The procedure is assisted by a (non-constrained) enrollment server (W) located in a non-constrained network behind the domain authenticator, e.g. on the Internet, providing information to the device (the voucher) and to the domain authenticator as part of the protocol.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <p id="section-2-3">The objective of this document is to specify such a protocol which is lightweight over the constrained link by reusing elements of EDHOC <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> and by shifting message overhead to the non-constrained side of the network.
 See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1</a>.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">Note the cardinality of the involved parties, it is expected that the authenticator need to handle a large unspecified number of devices, but for a given device type or manufacturer it is expected that one or a few nodes host enrollment servers.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-4">Note the cardinality of the involved parties. It is expected that the authenticator needs to handle a large unspecified number of devices, but for a given device type or manufacturer it is expected that one or a few nodes host enrollment servers.<a href="#section-2-4" class="pilcrow">¶</a></p>
 <span id="name-overview-of-message-flow-ed"></span><div id="fig-overview">
 <figure id="figure-1">
         <div id="section-2-5.1">
@@ -1379,7 +1379,7 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
 </div>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-overview-of-message-flow-ed" class="selfRef">Overview of message flow. EDHOC is used on the constrained link between U and V. Voucher_Info and Voucher are sent in EDHOC External Authorization Data (EAD). The link between V and W is not constrained.</a>
+<a href="#name-overview-of-message-flow-ed" class="selfRef">Overview of message flow. EDHOC is used on the constrained link between U and V. Voucher Info and Voucher are sent in EDHOC External Authorization Data (EAD). The link between V and W is not constrained.</a>
         </figcaption></figure>
 </div>
 </section>
@@ -1389,7 +1389,7 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
       <h2 id="name-assumptions">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-assumptions" class="section-name selfRef">Assumptions</a>
       </h2>
-<p id="section-3-1">The protocol is based on the following pre-existing relations between the device (U), the domain authenticator (V) and the enrollment server (W).<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">The protocol is based on the following pre-existing relations between the device (U), the domain authenticator (V) and the enrollment server (W), see <a href="#fig-trust" class="auto internal xref">Figure 2</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3-2.1">U and W have an explicit relation: U is configured with a public key of W, see <a href="#device" class="auto internal xref">Section 3.1</a>.<a href="#section-3-2.1" class="pilcrow">¶</a>
 </li>
@@ -1475,7 +1475,7 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-device-u" class="section-name selfRef">Device (U)</a>
         </h3>
 <p id="section-3.1-1">To authenticate to V, the device (U) runs EDHOC in the role of Initiator with authentication credential CRED_U, for example, an X.509 certificate or a CBOR Web Token (CWT, <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>). CRED_U may, for example, be carried in ID_CRED_I of EDHOC message_3 or be provisioned to V over a non-constrained network, see bottom of <a href="#fig-protocol" class="auto internal xref">Figure 3</a>.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">U also needs to identify itself to W, this device identifier is denoted by ID_U. The purpose of ID_U is for W to be able to determine if the device with this identifier is authorized to enroll with V. ID_U may be a reference to CRED_U, like ID_CRED_I in EDHOC (see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.5.2" class="relref">Section 3.5.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>), or a device identifier from a different name space, such as EUI-64 identifiers.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">U also needs to identify itself to W, this device identifier is denoted by ID_U. The purpose of ID_U is for W to be able to determine if the device with this identifier is authorized to enroll with V. ID_U may be a reference to CRED_U, like ID_CRED_I in EDHOC (see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.5.2" class="relref">Section 3.5.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>), or a device identifier from a different name space, such as EUI-64 identifiers.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">U is also provisioned with information about W:<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-4.1">A static public DH key of W (G_W) used to establish secure communication with the enrollment server (see <a href="#U-W" class="auto internal xref">Section 4.4</a>).<a href="#section-3.1-4.1" class="pilcrow">¶</a>
@@ -1490,7 +1490,7 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
         <h3 id="name-domain-authenticator-v">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-domain-authenticator-v" class="section-name selfRef">Domain Authenticator (V)</a>
         </h3>
-<p id="section-3.2-1">To authenticate to U, the domain authenticator (V) runs EDHOC in the role of Responder with an authentication credential CRED_V, which is a CWT Claims Set <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> containing a public key of V, see <a href="#V_2" class="auto internal xref">Section 4.5.2.1</a>. This proves to U the possession of the private key corresponding to the public key of CRED_V. CRED_V typically needs to be transported to U in EDHOC (using  ID_CRED_R = CRED_V, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.5.2" class="relref">Section 3.5.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>) since there is no previous relation between U and V.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">To authenticate to U, the domain authenticator (V) runs EDHOC in the role of Responder with an authentication credential CRED_V, which is a CWT Claims Set <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> containing a public key of V, see <a href="#V_2" class="auto internal xref">Section 4.5.2.1</a>. This proves to U the possession of the private key corresponding to the public key of CRED_V. CRED_V typically needs to be transported to U in EDHOC (using  ID_CRED_R = CRED_V, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.5.2" class="relref">Section 3.5.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>) since there is no previous relation between U and V.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">V and W need to establish a secure (confidentiality and integrity protected) connection for the Voucher Request/Response protocol. Furthermore, W needs access the same credential CRED_V as V used with U, and V needs to prove to W the possession of the private key corresponding to the public key of CRED_V. It is RECOMMENDED that V authenticates to W using the same credential CRED_V as with U.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2-3.1">V and W may protect the Voucher Request/Response protocol using TLS 1.3 with client authentication <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> if CRED_V is an X.509 certificate of a signature public key. However, note that CRED_V may not be a valid credential to use with TLS 1.3, e.g., when U and V run EDHOC with method 1 or 3, where the public key of CRED_V is a static Diffie-Hellman key.<a href="#section-3.2-3.1" class="pilcrow">¶</a>
@@ -1499,7 +1499,8 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
 </li>
         </ul>
 <p id="section-3.2-4">Note that both TLS 1.3 and EDHOC may be run between V and W during this setup procedure. For example, W may authenticate to V using TLS 1.3 with server certificates signed by a CA trusted by V, and then V may run EDHOC using CRED_V over the secure TLS connection to W, see <a href="#fig-protocol" class="auto internal xref">Figure 3</a>.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<p id="section-3.2-5">Other details of proof-of-possession related to CRED_V and transport of CRED_V are out of scope of this document.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.2-5">Note also that the secure connection between V and W may be long lived and reused for multiple voucher requests/responses.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.2-6">Other details of proof-of-possession related to CRED_V and transport of CRED_V are out of scope of this document.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authz-server">
@@ -1508,7 +1509,7 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-enrollment-server-w" class="section-name selfRef">Enrollment Server (W)</a>
         </h3>
 <p id="section-3.3-1">The enrollment server (W) is assumed to have the private DH key corresponding to G_W, which is used to establish secure communication with the device (see <a href="#U-W" class="auto internal xref">Section 4.4</a>). W provides to U the authorization decision for enrollment with V in the form of a voucher (see <a href="#voucher" class="auto internal xref">Section 4.4.2</a>). Authorization policies are out of scope for this document.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">Authentication credentials and communication security with V is described in <a href="#domain-auth" class="auto internal xref">Section 3.2</a>. To calculate the voucher, W needs access to message_1 and CRED_V as used in the EDHOC run between U and V, see <a href="#voucher" class="auto internal xref">Section 4.4.2</a>.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">Authentication credentials and communication security with V is described in <a href="#domain-auth" class="auto internal xref">Section 3.2</a>. To calculate the voucher, W needs access to message_1 and CRED_V as used in the EDHOC session between U and V, see <a href="#voucher" class="auto internal xref">Section 4.4.2</a>.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.3-3.1">W MUST verify that CRED_V is bound to the secure connection between W and V<a href="#section-3.3-3.1" class="pilcrow">¶</a>
 </li>
@@ -1532,14 +1533,14 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
         </h3>
 <p id="section-4.1-1">The protocol consist of three security sessions going on in parallel:<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.1-2">
-<li id="section-4.1-2.1">The EDHOC protocol between device (U) and (domain) authenticator (V)<a href="#section-4.1-2.1" class="pilcrow">¶</a>
+<li id="section-4.1-2.1">The EDHOC session between device (U) and (domain) authenticator (V)<a href="#section-4.1-2.1" class="pilcrow">¶</a>
 </li>
           <li id="section-4.1-2.2">Voucher Request/Response between authenticator (V) and enrollment server (W)<a href="#section-4.1-2.2" class="pilcrow">¶</a>
 </li>
           <li id="section-4.1-2.3">An exchange of voucher-related information, including the voucher itself, between device (U) and enrollment server (W), mediated by the authenticator (V).<a href="#section-4.1-2.3" class="pilcrow">¶</a>
 </li>
         </ol>
-<p id="section-4.1-3"><a href="#fig-protocol" class="auto internal xref">Figure 3</a> provides an overview of the message flow detailed in this section. An outline of EDHOC is given in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3" class="relref">Section 3</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.1-3"><a href="#fig-protocol" class="auto internal xref">Figure 3</a> provides an overview of the message flow detailed in this section. An outline of EDHOC is given in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3" class="relref">Section 3</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 <span id="name-overview-of-the-protocol-in"></span><div id="fig-protocol">
 <figure id="figure-3">
           <div id="section-4.1-4.1">
@@ -1668,7 +1669,7 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
 <li class="normal" id="section-4.2-2.1">G_X, the ephemeral public Diffie-Hellman key of U, is also used in the protocol between U and W.<a href="#section-4.2-2.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-4.2-2.2">
-            <p id="section-4.2-2.2.1">SUITES_I includes the cipher suite for EDHOC selected by U, and also defines the algorithms used between U and W (see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.6" class="relref">Section 3.6</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>):<a href="#section-4.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-2.2.1">SUITES_I includes the cipher suite for EDHOC selected by U, and also defines the algorithms used between U and W (see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.6" class="relref">Section 3.6</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>):<a href="#section-4.2-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2-2.2.2.1">EDHOC AEAD algorithm: used to encrypt ID_U<a href="#section-4.2-2.2.2.1" class="pilcrow">¶</a>
 </li>
@@ -1680,12 +1681,12 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
 </li>
             </ul>
 </li>
-          <li class="normal" id="section-4.2-2.3">EAD_1, EAD_2 are the External Authorization Data message fields of message_1 and message_2, respectively, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.8" class="relref">Section 3.8</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>. This document specifies the EAD items with ead_label = TBD1, see <a href="#iana-ead" class="auto internal xref">Section 7.1</a>).<a href="#section-4.2-2.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-4.2-2.3">EAD_1, EAD_2 are the External Authorization Data message fields of message_1 and message_2, respectively, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.8" class="relref">Section 3.8</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>. This document specifies the EAD items with ead_label = TBD1, see <a href="#iana-ead" class="auto internal xref">Section 7.1</a>).<a href="#section-4.2-2.3" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-4.2-2.4">ID_CRED_I and ID_CRED_R are used to identify the authentication credentials CRED_U and CRED_V, respectively. As shown at the bottom of <a href="#fig-protocol" class="auto internal xref">Figure 3</a>, V may use W to obtain CRED_U. CRED_V is transported in ID_CRED_R in message_2, see <a href="#V_2" class="auto internal xref">Section 4.5.2.1</a>.<a href="#section-4.2-2.4" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-4.2-3">The protocol also reuses the EDHOC-Extract and EDHOC-Expand key derivation from EDHOC (see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-4" class="relref">Section 4</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>).<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-3">The protocol also reuses the EDHOC-Extract and EDHOC-Expand key derivation from EDHOC (see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-4" class="relref">Section 4</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>).<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2-4.1">
             <p id="section-4.2-4.1.1">The intermediate pseudo-random key PRK is derived using EDHOC-Extract():<a href="#section-4.2-4.1.1" class="pilcrow">¶</a></p>
@@ -1702,7 +1703,7 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
             </ul>
 </li>
         </ul>
-<p id="section-4.2-5">The output keying material OKM is derived from PRK using EDHOC-Expand(), which is defined in terms of the EDHOC hash algorithm of the selected cipher suite, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-4.2" class="relref">Section 4.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>:<a href="#section-4.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.2-5">The output keying material OKM is derived from PRK using EDHOC-Expand(), which is defined in terms of the EDHOC hash algorithm of the selected cipher suite, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-4.2" class="relref">Section 4.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>:<a href="#section-4.2-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2-6.1">
             <p id="section-4.2-6.1.1">OKM = EDHOC-Expand(PRK, info, length)<a href="#section-4.2-6.1.1" class="pilcrow">¶</a></p>
@@ -1726,18 +1727,19 @@ info = (
         <h3 id="name-stateless-operation-of-v">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-stateless-operation-of-v" class="section-name selfRef">Stateless Operation of V</a>
         </h3>
-<p id="section-4.3-1">V may act statelessly in respect to U: the state of the EDHOC session started by U may be dropped at V until an authorization from W is received.
-Once V receives the EDHOC message_1 from U, it forwards it unmodified to W in the form of a Voucher Request.
-V encapsulates the internal state that it needs to respond to U and sends it to W together with EDHOC message_1.
+<p id="section-4.3-1">V may act statelessly with respect to U: the state of the EDHOC session started by U may be dropped at V until authorization from W is received.
+Once V has received EDHOC message_1 from U and extracted LOC_W from EAD_1, message_1 is forwarded unmodified to W in the form of a Voucher Request.
+V encapsulates the internal state that it needs to later respond to U, and sends that to W together with EDHOC message_1.
 This state typically contains U's IP address and port number, together with any other implementation-specific parameter needed by V to respond to U.
 At this point, V can drop the EDHOC session that was initiated by U.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <p id="section-4.3-2">V MUST encrypt and integrity protect the encapsulated state using a uniformly-distributed (pseudo-)random key, known only to itself.
 How V serializes and encrypts its internal state is out of scope of this specification.
 For example, V may use the existing CBOR and COSE libraries.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
-<p id="section-4.3-3">W sends to V the voucher together with echoed message_1, as received from U, and V's internal state.
+<p id="section-4.3-3">TBD: Should we include an exmple of serializing internal state?<a href="#section-4.3-3" class="pilcrow">¶</a></p>
+<p id="section-4.3-4">W sends to V the voucher together with echoed message_1, as received from U, and V's internal state.
 This allows V to act as a simple message relay until it has obtained the authorization from W to enroll U.
 The reception of a successful Voucher Response at V from W implies the authorization for V to enroll U.
-At this point, V can initialize a new EDHOC session with U, based on the message and the state retrieved from the Voucher Response from W.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
+At this point, V can initialize a new EDHOC session with U, based on the message and the state retrieved from the Voucher Response from W.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="U-W">
@@ -1778,7 +1780,7 @@ Voucher_Info_Seq = (
 </li>
             <li class="normal" id="section-4.4.1-7.2">'protected' is a byte string of size 0<a href="#section-4.4.1-7.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.4.1-7.3">'plaintext and 'external_aad' as below:<a href="#section-4.4.1-7.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.4.1-7.3">'plaintext' and 'external_aad' as below:<a href="#section-4.4.1-7.3" class="pilcrow">¶</a>
 </li>
           </ul>
 <div class="alignLeft art-text artwork" id="section-4.4.1-8">
@@ -1802,24 +1804,26 @@ external_aad = (
             <li class="normal" id="section-4.4.1-11.2">SS is the selected cipher suite in SUITES_I of EDHOC message_1, see <a href="#U-V" class="auto internal xref">Section 4.5</a>.<a href="#section-4.4.1-11.2" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="section-4.4.1-12">The derivation of K_1 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see <a href="#reuse" class="auto internal xref">Section 4.2</a>):<a href="#section-4.4.1-12" class="pilcrow">¶</a></p>
+<p id="section-4.4.1-12">TBD: Add more context to external_aad.<a href="#section-4.4.1-12" class="pilcrow">¶</a></p>
+<p id="section-4.4.1-13">The derivation of K_1 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see <a href="#reuse" class="auto internal xref">Section 4.2</a>):<a href="#section-4.4.1-13" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.4.1-13.1">info_label = 0<a href="#section-4.4.1-13.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.4.1-14.1">info_label = 0<a href="#section-4.4.1-14.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.4.1-13.2">context  = h''<a href="#section-4.4.1-13.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.4.1-14.2">context  = h''<a href="#section-4.4.1-14.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.4.1-13.3">length is length of key of the EDHOC AEAD algorithm in bytes<a href="#section-4.4.1-13.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.4.1-14.3">length is length of key of the EDHOC AEAD algorithm in bytes<a href="#section-4.4.1-14.3" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="section-4.4.1-14">The derivation of IV_1 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see <a href="#reuse" class="auto internal xref">Section 4.2</a>):<a href="#section-4.4.1-14" class="pilcrow">¶</a></p>
+<p id="section-4.4.1-15">The derivation of IV_1 = EDHOC-Expand(PRK, info, length) uses the following input to the info struct (see <a href="#reuse" class="auto internal xref">Section 4.2</a>):<a href="#section-4.4.1-15" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.4.1-15.1">info_label = 1<a href="#section-4.4.1-15.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4.4.1-16.1">info_label = 1<a href="#section-4.4.1-16.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.4.1-15.2">context = h''<a href="#section-4.4.1-15.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.4.1-16.2">context = h''<a href="#section-4.4.1-16.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-4.4.1-15.3">length is length of nonce of the EDHOC AEAD algorithm in bytes<a href="#section-4.4.1-15.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-4.4.1-16.3">length is length of nonce of the EDHOC AEAD algorithm in bytes<a href="#section-4.4.1-16.3" class="pilcrow">¶</a>
 </li>
           </ul>
+<p id="section-4.4.1-17">TBD: explain h'' is the CBOR empty string.<a href="#section-4.4.1-17" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="voucher">
@@ -1879,8 +1883,8 @@ voucher_input = (
             <h5 id="name-processing-in-u">
 <a href="#section-4.5.1.1" class="section-number selfRef">4.5.1.1. </a><a href="#name-processing-in-u" class="section-name selfRef">Processing in U</a>
             </h5>
-<p id="section-4.5.1.1-1">U composes EDHOC message_1 using authentication method, identifiers, etc. according to an agreed application profile, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.9" class="relref">Section 3.9</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>. The selected cipher suite, in this document denoted SS, applies also to the interaction with W as detailed in <a href="#reuse" class="auto internal xref">Section 4.2</a>, in particular, with respect to the Diffie Hellman key agreement algorithm used between U and W. As part of the normal EDHOC processing, U generates the ephemeral public key G_X which is reused in the interaction with W, see <a href="#U-W" class="auto internal xref">Section 4.4</a>.<a href="#section-4.5.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.5.1.1-2">The device sends EDHOC message_1 with EAD item (-TBD1, Voucher_Info) included in EAD_1, where Voucher_Info is specified in <a href="#U-W" class="auto internal xref">Section 4.4</a>. The negative sign indicates that the EAD item is critical, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.8" class="relref">Section 3.8</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.<a href="#section-4.5.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.5.1.1-1">U composes EDHOC message_1 using authentication method, identifiers, etc. according to an agreed application profile, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.9" class="relref">Section 3.9</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>. The selected cipher suite, in this document denoted SS, applies also to the interaction with W as detailed in <a href="#reuse" class="auto internal xref">Section 4.2</a>, in particular, with respect to the Diffie Hellman key agreement algorithm used between U and W. As part of the normal EDHOC processing, U generates the ephemeral public key G_X which is reused in the interaction with W, see <a href="#U-W" class="auto internal xref">Section 4.4</a>.<a href="#section-4.5.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.5.1.1-2">The device sends EDHOC message_1 with EAD item (-TBD1, Voucher_Info) included in EAD_1, where Voucher_Info is specified in <a href="#U-W" class="auto internal xref">Section 4.4</a>. The negative sign indicates that the EAD item is critical, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.8" class="relref">Section 3.8</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.<a href="#section-4.5.1.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="processing-in-v">
@@ -1888,7 +1892,7 @@ voucher_input = (
             <h5 id="name-processing-in-v">
 <a href="#section-4.5.1.2" class="section-number selfRef">4.5.1.2. </a><a href="#name-processing-in-v" class="section-name selfRef">Processing in V</a>
             </h5>
-<p id="section-4.5.1.2-1">V receives EDHOC message_1 from U and processes it as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-5.2.3" class="relref">Section 5.2.3</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>, with the additional step of processing the EAD item in EAD_1. Since the EAD item is critical, if V does not recognize it or it contains information that V cannot process, then V MUST discontinue EDHOC, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.8" class="relref">Section 3.8</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>. Otherwise, the ead_label = TBD1, triggers the voucher request to W as described in <a href="#V-W" class="auto internal xref">Section 4.6</a>. The exchange between V and W needs to be completed successfully for the EDHOC exchange to be continued.<a href="#section-4.5.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.5.1.2-1">V receives EDHOC message_1 from U and processes it as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-5.2.3" class="relref">Section 5.2.3</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>, with the additional step of processing the EAD item in EAD_1. Since the EAD item is critical, if V does not recognize it or it contains information that V cannot process, then V MUST abort the EDHOC session, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.8" class="relref">Section 3.8</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>. Otherwise, the ead_label = TBD1, triggers the voucher request to W as described in <a href="#V-W" class="auto internal xref">Section 4.6</a>. The exchange between V and W needs to be completed successfully for the EDHOC session to be continued.<a href="#section-4.5.1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1905,8 +1909,8 @@ voucher_input = (
             </h5>
 <p id="section-4.5.2.1-1">V receives the voucher response from W as described in <a href="#V-W" class="auto internal xref">Section 4.6</a>.<a href="#section-4.5.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.5.2.1-2">V sends EDHOC message_2 to U with the critical EAD item (-TBD1, Voucher) included in EAD_2, where the Voucher is specified in <a href="#U-W" class="auto internal xref">Section 4.4</a>.<a href="#section-4.5.2.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.5.2.1-3">CRED_V is a CWT Claims Set <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> containing the public authentication key of V encoded as a COSE_Key in the 'cnf' claim, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.5.2" class="relref">Section 3.5.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.<a href="#section-4.5.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.5.2.1-4">ID_CRED_R contains the CWT Claims Set with 'kccs' as COSE header_map, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-9.6" class="relref">Section 9.6</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.<a href="#section-4.5.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.5.2.1-3">CRED_V is a CWT Claims Set <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span> containing the public authentication key of V encoded as a COSE_Key in the 'cnf' claim, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.5.2" class="relref">Section 3.5.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.<a href="#section-4.5.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.5.2.1-4">ID_CRED_R contains the CWT Claims Set with 'kccs' as COSE header_map, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-9.6" class="relref">Section 9.6</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.<a href="#section-4.5.2.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="processing-in-u-1">
@@ -1914,8 +1918,8 @@ voucher_input = (
             <h5 id="name-processing-in-u-2">
 <a href="#section-4.5.2.2" class="section-number selfRef">4.5.2.2. </a><a href="#name-processing-in-u-2" class="section-name selfRef">Processing in U</a>
             </h5>
-<p id="section-4.5.2.2-1">U receives EDHOC message_2 from V and processes it as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>, with the additional step of processing the EAD item in EAD_2.<a href="#section-4.5.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.5.2.2-2">If U does not recognize the EAD item or the EAD item contains information that U cannot process, then U MUST discontinue EDHOC, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-3.8" class="relref">Section 3.8</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>. Otherwise U MUST verify the Voucher by performing the same calculation as in <a href="#voucher" class="auto internal xref">Section 4.4.2</a> using H(message_1) and CRED_V received in ID_CRED_R of message_2. If the voucher calculated in this way is not identical to what was received in message_2, then U MUST discontinue the protocol.<a href="#section-4.5.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.5.2.2-1">U receives EDHOC message_2 from V and processes it as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-5.3.2" class="relref">Section 5.3.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>, with the additional step of processing the EAD item in EAD_2.<a href="#section-4.5.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.5.2.2-2">If U does not recognize the EAD item or the EAD item contains information that U cannot process, then U MUST abort the EDHOC session, see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-3.8" class="relref">Section 3.8</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>. Otherwise U MUST verify the Voucher by performing the same calculation as in <a href="#voucher" class="auto internal xref">Section 4.4.2</a> using H(message_1) and CRED_V received in ID_CRED_R of message_2. If the voucher calculated in this way is not identical to what was received in message_2, then U MUST abort the EDHOC session.<a href="#section-4.5.2.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1998,7 +2002,7 @@ Voucher_Request = [
 </li>
             </ul>
 <p id="section-4.6.1.2-4">W verifies and decrypts ENC_ID using the relevant algorithms of the selected cipher suite SS (see <a href="#reuse" class="auto internal xref">Section 4.2</a>), and obtains ID_U.<a href="#section-4.6.1.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.6.1.2-5">W calculates the hash of message_1 H(message_1), and associates this session identifier to the device identifier ID_U. If H(message_1) is not unique among session identifiers associated to this device identifier of U, the protocol SHALL be discontinued.<a href="#section-4.6.1.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.6.1.2-5">W calculates the hash of message_1 H(message_1), and associates this session identifier to the device identifier ID_U. If H(message_1) is not unique among session identifiers associated to this device identifier of U, the EDHOC session SHALL be aborted.<a href="#section-4.6.1.2-5" class="pilcrow">¶</a></p>
 <p id="section-4.6.1.2-6">W uses ID_U to look up the associated authorization policies for U and enforces them. This is out of scope for the specification.<a href="#section-4.6.1.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2042,7 +2046,7 @@ Voucher_Response = [
 <a href="#section-4.6.2.2" class="section-number selfRef">4.6.2.2. </a><a href="#name-processing-in-v-5" class="section-name selfRef">Processing in V</a>
             </h5>
 <p id="section-4.6.2.2-1">V receives the voucher response from W over the secure connection.
-If present, V decrypts and verifies opaque_state as received from W. If that verification fails then EDHOC is discontinued.
+If present, V decrypts and verifies opaque_state as received from W. If that verification fails then EDHOC is aborted.
 If the voucher response is successfully received from W, then V responds to U with EDHOC message_2 as described in <a href="#V_2" class="auto internal xref">Section 4.5.2.1</a>.<a href="#section-4.6.2.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2065,11 +2069,12 @@ V SHOULD access the resources exposed by W through the protocol indicated by the
         <h3 id="name-scheme-https">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-scheme-https" class="section-name selfRef">Scheme "https"</a>
         </h3>
-<p id="section-5.1-1">In case the scheme indicates "https", V MUST perform a TLS handshake with W and use HTTP.
-If the authentication credential CRED_V can be used in a TLS handshake, e.g. an X.509 certificate of a signature public key, then V SHOULD use it to authenticate to W as a client.
+<p id="section-5.1-1">In case the scheme indicates "https", V MUST perform a TLS handshake with W and use HTTP.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">TBD: This should not be necessary for each device request; if there already is a TLS connection between V and W that should be reused. Similar considerations for 5.2 and 5.3.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-3">If the authentication credential CRED_V can be used in a TLS handshake, e.g. an X.509 certificate of a signature public key, then V SHOULD use it to authenticate to W as a client.
 If the authentication credential CRED_V cannot be used in a TLS handshake, e.g. if the public key is a static Diffie-Hellman key, then V SHOULD first perform a TLS handshake with W using available compatible keys.
-V MUST then perform an EDHOC handshake over the TLS connection proving to W the possession of the private key corresponding to CRED_V.
-Performing the EDHOC handshake is only necessary if V did not authenticate with CRED_V in the TLS handshake with W.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+V MUST then perform an EDHOC session over the TLS connection proving to W the possession of the private key corresponding to CRED_V.
+Performing the EDHOC session is only necessary if V did not authenticate with CRED_V in the TLS handshake with W.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="scheme-coaps">
@@ -2078,7 +2083,7 @@ Performing the EDHOC handshake is only necessary if V did not authenticate with 
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-scheme-coaps" class="section-name selfRef">Scheme "coaps"</a>
         </h3>
 <p id="section-5.2-1">In case the scheme indicates "coaps", V SHOULD perform a DTLS handshake with W and access the resources defined in <a href="#uris" class="auto internal xref">Section 5.4</a> using CoAP.
-The normative requirements in <a href="#scheme-https" class="auto internal xref">Section 5.1</a> on performing the DTLS and EDHOC handshakes remain the same, except that TLS is replaced with DTLS.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+The normative requirements in <a href="#scheme-https" class="auto internal xref">Section 5.1</a> on performing the DTLS handshake and EDHOC session remain the same, except that TLS is replaced with DTLS.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="scheme-coap">
@@ -2086,8 +2091,8 @@ The normative requirements in <a href="#scheme-https" class="auto internal xref"
         <h3 id="name-scheme-coap">
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-scheme-coap" class="section-name selfRef">Scheme "coap"</a>
         </h3>
-<p id="section-5.3-1">In case the scheme indicates "coap", V SHOULD perform an EDHOC handshake with W, as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#appendix-A" class="relref">Appendix A</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> and access the resources defined in <a href="#uris" class="auto internal xref">Section 5.4</a> using OSCORE and CoAP.
-The authentication credential in this EDHOC run MUST be CRED_V.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-1">In case the scheme indicates "coap", V SHOULD perform an EDHOC session with W, as specified in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#appendix-A" class="relref">Appendix A</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> and access the resources defined in <a href="#uris" class="auto internal xref">Section 5.4</a> using OSCORE and CoAP.
+The authentication credential in this EDHOC session MUST be CRED_V.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="uris">
@@ -2158,7 +2163,7 @@ To request U's authentication credential, V MUST issue a request:<a href="#secti
 <p id="section-6-1">This specification builds on and reuses many of the security constructions of EDHOC, e.g., shared secret calculation and key derivation. The security considerations of EDHOC <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> apply with modifications discussed here.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">EDHOC provides identity protection of the Initiator, here the device. The encryption of the device identifier ID_U in the first message should consider potential information leaking from the length of ID_U, either by making all identifiers having the same length or the use of a padding scheme.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">Although W learns about the identity of U after receiving VREQ, this information must not be disclosed to V, until U has revealed its identity to V with ID_CRED_I in message_3. W may be used for lookup of CRED_U from ID_CRED_I, or this credential lookup function may be separate from the authorization function of W, see <a href="#fig-protocol" class="auto internal xref">Figure 3</a>. The trust model used here is that U decides to which V it reveals its identity. In an alternative trust model where U trusts W to decide to which V it reveals U's identity, CRED_U could be sent in Voucher Response.<a href="#section-6-3" class="pilcrow">¶</a></p>
-<p id="section-6-4">As noted in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19#section-8.2" class="relref">Section 8.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> an ephemeral key may be used to calculate several ECDH shared secrets. In this specification the ephemeral key G_X is also used to calculate G_XW, the shared secret with the enrollment server.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-4">As noted in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20#section-8.2" class="relref">Section 8.2</a> of [<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> an ephemeral key may be used to calculate several ECDH shared secrets. In this specification the ephemeral key G_X is also used to calculate G_XW, the shared secret with the enrollment server.<a href="#section-6-4" class="pilcrow">¶</a></p>
 <p id="section-6-5">The private ephemeral key is thus used in the device for calculations of key material relating to both the authenticator and the enrollment server. There are different options for where to implement these calculations, one option is as an addition to EDHOC, i.e., to extend the EDHOC API in the device with input of public key of W (G_W) and device identifier of U (ID_U), and produce the encryption of ID_U which is included in Voucher_Info in EAD_1.<a href="#section-6-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2331,7 +2336,7 @@ No A, AAAA, or PTR record is requested.<a href="#section-7.3-1" class="pilcrow">
 <dl class="references">
 <dt id="I-D.ietf-lake-edhoc">[I-D.ietf-lake-edhoc]</dt>
         <dd>
-<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, and <span class="refAuthor">F. Palombini</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lake-edhoc-19</span>, <time datetime="2023-02-03" class="refDate">3 February 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19">https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-19</a>&gt;</span>. </dd>
+<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, and <span class="refAuthor">F. Palombini</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lake-edhoc-20</span>, <time datetime="2023-07-07" class="refDate">7 July 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/api/v1/doc/document/draft-ietf-lake-edhoc/">https://datatracker.ietf.org/api/v1/doc/document/draft-ietf-lake-edhoc/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="NIST-800-56A">[NIST-800-56A]</dt>
         <dd>
@@ -2580,7 +2585,7 @@ The authenticator SHALL map the message to a CoAP response:<a href="#appendix-A.
 Upon successful processing of message_2, the device prepares flight 3, which is an OSCORE-protected CoJP request containing an EDHOC message_3, as described in <span>[<a href="#I-D.ietf-core-oscore-edhoc" class="cite xref">I-D.ietf-core-oscore-edhoc</a>]</span>.
 EDHOC message_3 is prepared as described in <a href="#U-V" class="auto internal xref">Section 4.5</a>.
 The OSCORE-protected payload is the CoJP Join Request object specified in <span><a href="https://rfc-editor.org/rfc/rfc9031#section-8.4.1" class="relref">Section 8.4.1</a> of [<a href="#RFC9031" class="cite xref">RFC9031</a>]</span>.
-OSCORE protection leverages the OSCORE Security Context derived from the EDHOC exchange, as specified in Appendix A of <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.
+OSCORE protection leverages the OSCORE Security Context derived from the EDHOC session, as specified in Appendix A of <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>.
 To that end, <span>[<a href="#I-D.ietf-core-oscore-edhoc" class="cite xref">I-D.ietf-core-oscore-edhoc</a>]</span> specifies that the Sender ID of the client (device) must be set to the connection identifier selected by the domain authenticator, C_R.
 OSCORE includes the Sender ID as the kid in the OSCORE option.
 The network identifier in the CoJP Join Request object is set to the network identifier obtained from the network discovery phase.
@@ -2602,9 +2607,9 @@ In case of IEEE 802.15.4 networks, this is the PAN ID.<a href="#appendix-A.2.3-1
             <li class="normal" id="appendix-A.2.3-3.7">The payload is prepared as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-oscore-edhoc-07#section-3.2" class="relref">Section 3.2</a> of [<a href="#I-D.ietf-core-oscore-edhoc" class="cite xref">I-D.ietf-core-oscore-edhoc</a>]</span>, with EDHOC message_3 and the CoJP Join Request object as the OSCORE-protected payload.<a href="#appendix-A.2.3-3.7" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="appendix-A.2.3-4">Note that the OSCORE Sender IDs are derived from the connection identifiers of the EDHOC exchange.
+<p id="appendix-A.2.3-4">Note that the OSCORE Sender IDs are derived from the connection identifiers of the EDHOC session.
 This is in contrast with <span>[<a href="#RFC9031" class="cite xref">RFC9031</a>]</span> where ID Context of the OSCORE Security Context is set to the device identifier (pledge identifier).
-Since the device identity is exchanged during the EDHOC handshake, and the certificate of the device is communicated to the authenticator as part of the Voucher Response message, there is no need to transport the device identity in OSCORE messages.
+Since the device identity is exchanged during the EDHOC session, and the certificate of the device is communicated to the authenticator as part of the Voucher Response message, there is no need to transport the device identity in OSCORE messages.
 The authenticator playing the role of the <span>[<a href="#RFC9031" class="cite xref">RFC9031</a>]</span> JRC obtains the device identity from the execution of the authorization protocol.<a href="#appendix-A.2.3-4" class="pilcrow">¶</a></p>
 </section>
 </div>

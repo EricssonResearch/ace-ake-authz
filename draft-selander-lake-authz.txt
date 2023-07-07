@@ -5,13 +5,13 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 7 January 2024                                       M. Vučinić
+Expires: 8 January 2024                                       M. Vučinić
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
                                                          A. Schellenbaum
                                                                     ZHAW
-                                                             6 July 2023
+                                                             7 July 2023
 
 
    Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2024.
+   This Internet-Draft will expire on 8 January 2024.
 
 Copyright Notice
 
@@ -184,10 +184,10 @@ Table of Contents
    [I-D.ietf-lake-edhoc] and by shifting message overhead to the non-
    constrained side of the network.  See illustration in Figure 1.
 
-   Note the cardinality of the involved parties, it is expected that the
-   authenticator need to handle a large unspecified number of devices,
-   but for a given device type or manufacturer it is expected that one
-   or a few nodes host enrollment servers.
+   Note the cardinality of the involved parties.  It is expected that
+   the authenticator needs to handle a large unspecified number of
+   devices, but for a given device type or manufacturer it is expected
+   that one or a few nodes host enrollment servers.
 
                    Voucher
                    Info
@@ -201,7 +201,7 @@ Table of Contents
                  Voucher
 
          Figure 1: Overview of message flow.  EDHOC is used on the
-      constrained link between U and V.  Voucher_Info and Voucher are
+      constrained link between U and V.  Voucher Info and Voucher are
          sent in EDHOC External Authorization Data (EAD).  The link
                     between V and W is not constrained.
 
@@ -209,7 +209,7 @@ Table of Contents
 
    The protocol is based on the following pre-existing relations between
    the device (U), the domain authenticator (V) and the enrollment
-   server (W).
+   server (W), see Figure 2.
 
    *  U and W have an explicit relation: U is configured with a public
       key of W, see Section 3.1.
@@ -300,6 +300,9 @@ Table of Contents
    may run EDHOC using CRED_V over the secure TLS connection to W, see
    Figure 3.
 
+   Note also that the secure connection between V and W may be long
+   lived and reused for multiple voucher requests/responses.
+
    Other details of proof-of-possession related to CRED_V and transport
    of CRED_V are out of scope of this document.
 
@@ -314,8 +317,8 @@ Table of Contents
 
    Authentication credentials and communication security with V is
    described in Section 3.2.  To calculate the voucher, W needs access
-   to message_1 and CRED_V as used in the EDHOC run between U and V, see
-   Section 4.4.2.
+   to message_1 and CRED_V as used in the EDHOC session between U and V,
+   see Section 4.4.2.
 
    *  W MUST verify that CRED_V is bound to the secure connection
       between W and V
@@ -332,7 +335,7 @@ Table of Contents
 
    The protocol consist of three security sessions going on in parallel:
 
-   1.  The EDHOC protocol between device (U) and (domain) authenticator
+   1.  The EDHOC session between device (U) and (domain) authenticator
        (V)
 
    2.  Voucher Request/Response between authenticator (V) and enrollment
@@ -462,21 +465,24 @@ Table of Contents
 
 4.3.  Stateless Operation of V
 
-   V may act statelessly in respect to U: the state of the EDHOC session
-   started by U may be dropped at V until an authorization from W is
-   received.  Once V receives the EDHOC message_1 from U, it forwards it
-   unmodified to W in the form of a Voucher Request.  V encapsulates the
-   internal state that it needs to respond to U and sends it to W
-   together with EDHOC message_1.  This state typically contains U's IP
-   address and port number, together with any other implementation-
-   specific parameter needed by V to respond to U.  At this point, V can
-   drop the EDHOC session that was initiated by U.
+   V may act statelessly with respect to U: the state of the EDHOC
+   session started by U may be dropped at V until authorization from W
+   is received.  Once V has received EDHOC message_1 from U and
+   extracted LOC_W from EAD_1, message_1 is forwarded unmodified to W in
+   the form of a Voucher Request.  V encapsulates the internal state
+   that it needs to later respond to U, and sends that to W together
+   with EDHOC message_1.  This state typically contains U's IP address
+   and port number, together with any other implementation-specific
+   parameter needed by V to respond to U.  At this point, V can drop the
+   EDHOC session that was initiated by U.
 
    V MUST encrypt and integrity protect the encapsulated state using a
    uniformly-distributed (pseudo-)random key, known only to itself.  How
    V serializes and encrypts its internal state is out of scope of this
    specification.  For example, V may use the existing CBOR and COSE
    libraries.
+
+   TBD: Should we include an exmple of serializing internal state?
 
    W sends to V the voucher together with echoed message_1, as received
    from U, and V's internal state.  This allows V to act as a simple
@@ -523,7 +529,7 @@ Table of Contents
 
    *  'protected' is a byte string of size 0
 
-   *  'plaintext and 'external_aad' as below:
+   *  'plaintext' and 'external_aad' as below:
 
    plaintext = (
        ID_U:            bstr,
@@ -539,6 +545,8 @@ Table of Contents
 
    *  SS is the selected cipher suite in SUITES_I of EDHOC message_1,
       see Section 4.5.
+
+   TBD: Add more context to external_aad.
 
    The derivation of K_1 = EDHOC-Expand(PRK, info, length) uses the
    following input to the info struct (see Section 4.2):
@@ -557,6 +565,8 @@ Table of Contents
    *  context = h''
 
    *  length is length of nonce of the EDHOC AEAD algorithm in bytes
+
+   TBD: explain h'' is the CBOR empty string.
 
 4.4.2.  Voucher
 
@@ -625,11 +635,11 @@ Table of Contents
    Section 5.2.3 of [I-D.ietf-lake-edhoc], with the additional step of
    processing the EAD item in EAD_1.  Since the EAD item is critical, if
    V does not recognize it or it contains information that V cannot
-   process, then V MUST discontinue EDHOC, see Section 3.8 of
+   process, then V MUST abort the EDHOC session, see Section 3.8 of
    [I-D.ietf-lake-edhoc].  Otherwise, the ead_label = TBD1, triggers the
    voucher request to W as described in Section 4.6.  The exchange
    between V and W needs to be completed successfully for the EDHOC
-   exchange to be continued.
+   session to be continued.
 
 4.5.2.  Message 2
 
@@ -655,12 +665,12 @@ Table of Contents
    processing the EAD item in EAD_2.
 
    If U does not recognize the EAD item or the EAD item contains
-   information that U cannot process, then U MUST discontinue EDHOC, see
-   Section 3.8 of [I-D.ietf-lake-edhoc].  Otherwise U MUST verify the
-   Voucher by performing the same calculation as in Section 4.4.2 using
-   H(message_1) and CRED_V received in ID_CRED_R of message_2.  If the
-   voucher calculated in this way is not identical to what was received
-   in message_2, then U MUST discontinue the protocol.
+   information that U cannot process, then U MUST abort the EDHOC
+   session, see Section 3.8 of [I-D.ietf-lake-edhoc].  Otherwise U MUST
+   verify the Voucher by performing the same calculation as in
+   Section 4.4.2 using H(message_1) and CRED_V received in ID_CRED_R of
+   message_2.  If the voucher calculated in this way is not identical to
+   what was received in message_2, then U MUST abort the EDHOC session.
 
 4.5.3.  Message 3
 
@@ -730,7 +740,7 @@ Table of Contents
    W calculates the hash of message_1 H(message_1), and associates this
    session identifier to the device identifier ID_U.  If H(message_1) is
    not unique among session identifiers associated to this device
-   identifier of U, the protocol SHALL be discontinued.
+   identifier of U, the EDHOC session SHALL be aborted.
 
    W uses ID_U to look up the associated authorization policies for U
    and enforces them.  This is out of scope for the specification.
@@ -766,9 +776,9 @@ Table of Contents
 
    V receives the voucher response from W over the secure connection.
    If present, V decrypts and verifies opaque_state as received from W.
-   If that verification fails then EDHOC is discontinued.  If the
-   voucher response is successfully received from W, then V responds to
-   U with EDHOC message_2 as described in Section 4.5.2.1.
+   If that verification fails then EDHOC is aborted.  If the voucher
+   response is successfully received from W, then V responds to U with
+   EDHOC message_2 as described in Section 4.5.2.1.
 
 5.  REST Interface at W
 
@@ -780,32 +790,37 @@ Table of Contents
 5.1.  Scheme "https"
 
    In case the scheme indicates "https", V MUST perform a TLS handshake
-   with W and use HTTP.  If the authentication credential CRED_V can be
-   used in a TLS handshake, e.g. an X.509 certificate of a signature
-   public key, then V SHOULD use it to authenticate to W as a client.
-   If the authentication credential CRED_V cannot be used in a TLS
-   handshake, e.g. if the public key is a static Diffie-Hellman key,
-   then V SHOULD first perform a TLS handshake with W using available
-   compatible keys.  V MUST then perform an EDHOC handshake over the TLS
-   connection proving to W the possession of the private key
-   corresponding to CRED_V.  Performing the EDHOC handshake is only
-   necessary if V did not authenticate with CRED_V in the TLS handshake
-   with W.
+   with W and use HTTP.
+
+   TBD: This should not be necessary for each device request; if there
+   already is a TLS connection between V and W that should be reused.
+   Similar considerations for 5.2 and 5.3.
+
+   If the authentication credential CRED_V can be used in a TLS
+   handshake, e.g. an X.509 certificate of a signature public key, then
+   V SHOULD use it to authenticate to W as a client.  If the
+   authentication credential CRED_V cannot be used in a TLS handshake,
+   e.g. if the public key is a static Diffie-Hellman key, then V SHOULD
+   first perform a TLS handshake with W using available compatible keys.
+   V MUST then perform an EDHOC session over the TLS connection proving
+   to W the possession of the private key corresponding to CRED_V.
+   Performing the EDHOC session is only necessary if V did not
+   authenticate with CRED_V in the TLS handshake with W.
 
 5.2.  Scheme "coaps"
 
    In case the scheme indicates "coaps", V SHOULD perform a DTLS
    handshake with W and access the resources defined in Section 5.4
    using CoAP.  The normative requirements in Section 5.1 on performing
-   the DTLS and EDHOC handshakes remain the same, except that TLS is
-   replaced with DTLS.
+   the DTLS handshake and EDHOC session remain the same, except that TLS
+   is replaced with DTLS.
 
 5.3.  Scheme "coap"
 
    In case the scheme indicates "coap", V SHOULD perform an EDHOC
-   handshake with W, as specified in Appendix A of [I-D.ietf-lake-edhoc]
+   session with W, as specified in Appendix A of [I-D.ietf-lake-edhoc]
    and access the resources defined in Section 5.4 using OSCORE and
-   CoAP.  The authentication credential in this EDHOC run MUST be
+   CoAP.  The authentication credential in this EDHOC session MUST be
    CRED_V.
 
 5.4.  URIs
@@ -1004,9 +1019,9 @@ Table of Contents
    [I-D.ietf-lake-edhoc]
               Selander, G., Mattsson, J. P., and F. Palombini,
               "Ephemeral Diffie-Hellman Over COSE (EDHOC)", Work in
-              Progress, Internet-Draft, draft-ietf-lake-edhoc-19, 3
-              February 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-lake-edhoc-19>.
+              Progress, Internet-Draft, draft-ietf-lake-edhoc-20, 7 July
+              2023, <https://datatracker.ietf.org/api/v1/doc/document/
+              draft-ietf-lake-edhoc/>.
 
    [NIST-800-56A]
               Barker, E., Chen, L., Roginsky, A., Vassilev, A., and R.
@@ -1221,7 +1236,7 @@ A.2.3.  Flight 3
    described in Section 4.5.  The OSCORE-protected payload is the CoJP
    Join Request object specified in Section 8.4.1 of [RFC9031].  OSCORE
    protection leverages the OSCORE Security Context derived from the
-   EDHOC exchange, as specified in Appendix A of [I-D.ietf-lake-edhoc].
+   EDHOC session, as specified in Appendix A of [I-D.ietf-lake-edhoc].
    To that end, [I-D.ietf-core-oscore-edhoc] specifies that the Sender
    ID of the client (device) must be set to the connection identifier
    selected by the domain authenticator, C_R.  OSCORE includes the
@@ -1249,15 +1264,15 @@ A.2.3.  Flight 3
       Join Request object as the OSCORE-protected payload.
 
    Note that the OSCORE Sender IDs are derived from the connection
-   identifiers of the EDHOC exchange.  This is in contrast with
-   [RFC9031] where ID Context of the OSCORE Security Context is set to
-   the device identifier (pledge identifier).  Since the device identity
-   is exchanged during the EDHOC handshake, and the certificate of the
-   device is communicated to the authenticator as part of the Voucher
-   Response message, there is no need to transport the device identity
-   in OSCORE messages.  The authenticator playing the role of the
-   [RFC9031] JRC obtains the device identity from the execution of the
-   authorization protocol.
+   identifiers of the EDHOC session.  This is in contrast with [RFC9031]
+   where ID Context of the OSCORE Security Context is set to the device
+   identifier (pledge identifier).  Since the device identity is
+   exchanged during the EDHOC session, and the certificate of the device
+   is communicated to the authenticator as part of the Voucher Response
+   message, there is no need to transport the device identity in OSCORE
+   messages.  The authenticator playing the role of the [RFC9031] JRC
+   obtains the device identity from the execution of the authorization
+   protocol.
 
 A.2.4.  Flight 4
 
