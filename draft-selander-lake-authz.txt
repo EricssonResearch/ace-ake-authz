@@ -349,58 +349,65 @@ Table of Contents
    section.  An outline of EDHOC is given in Section 3 of
    [I-D.ietf-lake-edhoc].
 
-         U                               V                                  W
-         |                               |                                  |
-         |                               |                                  |
-         |                               |     Establish secure channel     |
-         |                               +<--  ---  ---  ---   ---  ---  -->|
-         |                               |   (e.g., TLS with server cert.)  |
-         |                               |                                  |
-         |                               |       Proof of possession        |
-         |                               +<--  ---  ---  ---   ---  ---  -->|
-         |                               |         (e.g., EDHOC)            |
-         |                               |                                  |
-         |                               |                                  |
-+------------------------------------------------------------------------------------+
-|        |                               |                                  |        |
-|        |        EDHOC message_1        |                                  |        |
-|        +------------------------------>|                                  |        |
-|        |    (EAD_1 = LOC_W, ENC_ID)    |                                  |        |
-|        |                               |                                  |        |
-|        |                               |     Voucher Request (VREQ)       |        |
-|        |                               +--------------------------------->|        |
-|        |                               |    (wrapped EDHOC message_1)     |        |
-|        |                               |                                  |        |
-|        |                               |     Voucher Response (VRES)      |        |
-|        |                               |<---------------------------------+        |
-|        |                               |            (Voucher)             |        |
-|        |                               |                                  |        |
-|        |        EDHOC message_2        |                                  |        |
-|        |<------------------------------+                                  |        |
-|        |       (EAD_2 = Voucher)       |                                  |        |
-|        |                               |                                  |        |
-|        |                               |                                  |        |
-|        |        EDHOC message_3        |                                  |        |
-|        +------------------------------>|                                  |        |
-|        |                               |                                  |        |
-+------------------------------------------------------------------------------------+
-         |                               |
-         |                               |                              Credential
-         |                               |                               Database
-         |                               |                                  |
-         |                               |     ID_CRED_I from message_3     |
-         |                               +---  ---  ---  ---   ---  ---  -->|
-         |                               |<--  ---  ---  ---   ---  ---  ---+
-         |                               |              CRED_U              |
-         |                               |                                  |
+   U                           V                                       W
+   |                           |                                       |
+   |                           |                                       |
+   |                           |        Establish secure channel       |
+   |                           +<---  ---  ---  ---  ---  ---  ---  -->|
+   |                           |      (e.g., TLS with server cert.)    |
+   |                           |                                       |
+   |                           |   Proof of possession w.r.t. CRED     |
+   |                           +<---  ---  ---  ---  ---  ---  ---  -->|
+   |                           |            (e.g., EDHOC)              |
+   |                           |                                       |
+   |                           |                                       |
+   |                           |                                       |
 
-   Figure 3: Overview of the protocol (inside the box): W-assisted
-    authorization of U and V to each other: EDHOC between U and V,
-      and Voucher Request/ Response between V and W.  Before the
-      protocol, V and W are assumed to have established a secure
-     channel and performed proof-of- possession of relevant keys.
-    Credential lookup of CRED_U may involve W or other credential
-                              database.
+   ---------------------------------------------------------------------
+                           CORE PROTOCOL
+
+   |                           |                                       |
+   |      EDHOC message_1      |                                       |
+   +-------------------------->|                                       |
+   |  (EAD_1 = LOC_W, ENC_ID)  |                                       |
+   |                           |                                       |
+   |                           |        Voucher Request (VREQ)         |
+   |                           +-------------------------------------->|
+   |                           |       (message_1, ?opaque_state)      |
+   |                           |                                       |
+   |                           |        Voucher Response (VRES)        |
+   |                           |<--------------------------------------+
+   |                           |  (message_1, Voucher, ?opaque_state)  |
+   |                           |                                       |
+   |      EDHOC message_2      |                                       |
+   |<--------------------------+                                       |
+   |     (EAD_2 = Voucher)     |                                       |
+   |                           |                                       |
+   |                           |                                       |
+   |      EDHOC message_3      |                                       |
+   +-------------------------->|                                       |
+   |                           |                                       |
+
+   ---------------------------------------------------------------------
+
+   |                           |
+   |                           |                              Credential
+   |                           |                                Database
+   |                           |                                       |
+   |                           |       ID_CRED_I from message_3        |
+   |                           +---  ---  ---  ---   ---  ---  ---  -->|
+   |                           |                                       |
+   |                           |                 CRED_U                |
+   |                           |<--  ---  ---  ---  ---   ---  ---  ---+
+   |                           |                                       |
+   |                           |                                       |
+
+     Figure 3: Overview of the protocol: W-assisted authorization of U
+      and V to each other: EDHOC between U and V, and Voucher Request/
+        Response between V and W.  Before the protocol, V and W are
+     assumed to have established a secure channel and performed proof-
+      of-possession of relevant keys.  Credential lookup of CRED_U may
+                  involve W or other credential database.
 
 4.2.  Reuse of EDHOC
 
@@ -1049,10 +1056,6 @@ Table of Contents
               DOI 10.17487/RFC9052, August 2022,
               <https://www.rfc-editor.org/info/rfc9052>.
 
-   [RFC9053]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
-              Initial Algorithms", RFC 9053, DOI 10.17487/RFC9053,
-              August 2022, <https://www.rfc-editor.org/info/rfc9053>.
-
 8.2.  Informative References
 
    [I-D.ietf-core-oscore-edhoc]
@@ -1061,14 +1064,6 @@ Table of Contents
               Progress, Internet-Draft, draft-ietf-core-oscore-edhoc-07,
               13 March 2023, <https://datatracker.ietf.org/doc/html/
               draft-ietf-core-oscore-edhoc-07>.
-
-   [I-D.ietf-cose-cbor-encoded-cert]
-              Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
-              M. Furuhed, "CBOR Encoded X.509 Certificates (C509
-              Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-05, 10 January 2023,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-05>.
 
    [I-D.ietf-lake-reqs]
               Vučinić, M., Selander, G., Mattsson, J. P., and D. Garcia-
@@ -1121,10 +1116,6 @@ Table of Contents
               Richardson, "Constrained Join Protocol (CoJP) for 6TiSCH",
               RFC 9031, DOI 10.17487/RFC9031, May 2021,
               <https://www.rfc-editor.org/info/rfc9031>.
-
-   [RFC9180]  Barnes, R., Bhargavan, K., Lipp, B., and C. Wood, "Hybrid
-              Public Key Encryption", RFC 9180, DOI 10.17487/RFC9180,
-              February 2022, <https://www.rfc-editor.org/info/rfc9180>.
 
 Appendix A.  Use with Constrained Join Protocol (CoJP)
 
