@@ -5,13 +5,13 @@
 LAKE Working Group                                           G. Selander
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                             Ericsson AB
-Expires: 8 January 2024                                       M. Vučinić
+Expires: 25 January 2024                                      M. Vučinić
                                                                    INRIA
                                                            M. Richardson
                                                 Sandelman Software Works
                                                          A. Schellenbaum
                                                                     ZHAW
-                                                             7 July 2023
+                                                            24 July 2023
 
 
    Lightweight Authorization using Ephemeral Diffie-Hellman Over COSE
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2024.
+   This Internet-Draft will expire on 25 January 2024.
 
 Copyright Notice
 
@@ -170,8 +170,10 @@ Table of Contents
    domain over a constrained link.  The device authenticates and
    enforces authorization of the (non-constrained) domain authenticator
    (V) with the help of a voucher conveying authorization information.
-   The domain authenticator, in turn, authenticates the device and
-   authorizes its enrollment into the domain.
+   The voucher has a similar role as in [RFC8366] but should be
+   considerably more compact.  The domain authenticator, in turn,
+   authenticates the device and authorizes its enrollment into the
+   domain.
 
    The procedure is assisted by a (non-constrained) enrollment server
    (W) located in a non-constrained network behind the domain
@@ -227,10 +229,10 @@ Table of Contents
        | <---------------------------------------------------> |
        |                                                       |
   +----+-----+            +---------------+            +-------+-------+
-  |          |            |               |    non-    |               |
-  |  Device  |    con-    |    Domain     |    con-    |   Enrollment  |
-  |          |    stra-   | Authenticator |    stra-   |     Server    |
-  |   (U)    |    ined    |      (V)      |    ined    |      (W)      |
+  |          |            |               |            |               |
+  |  Device  |    con-    |    Domain     |  not con-  |   Enrollment  |
+  |          |  strained  | Authenticator |  strained  |     Server    |
+  |   (U)    |  network   |       (V)     |  network   |      (W)      |
   |          |            |               |            |               |
   +----+-----+            +-------+-------+            +-------+-------+
        |                          |                            |
@@ -1026,8 +1028,8 @@ Table of Contents
               Selander, G., Mattsson, J. P., and F. Palombini,
               "Ephemeral Diffie-Hellman Over COSE (EDHOC)", Work in
               Progress, Internet-Draft, draft-ietf-lake-edhoc-20, 7 July
-              2023, <https://datatracker.ietf.org/api/v1/doc/document/
-              draft-ietf-lake-edhoc/>.
+              2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              lake-edhoc-20>.
 
    [NIST-800-56A]
               Barker, E., Chen, L., Roginsky, A., Vassilev, A., and R.
@@ -1036,6 +1038,11 @@ Table of Contents
               Special Publication 800-56A, Revision 3", April 2018,
               <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/
               NIST.SP.800-56Ar3.pdf>.
+
+   [RFC8366]  Watsen, K., Richardson, M., Pritikin, M., and T. Eckert,
+              "A Voucher Artifact for Bootstrapping Protocols",
+              RFC 8366, DOI 10.17487/RFC8366, May 2018,
+              <https://www.rfc-editor.org/info/rfc8366>.
 
    [RFC8392]  Jones, M., Wahlstroem, E., Erdtman, S., and H. Tschofenig,
               "CBOR Web Token (CWT)", RFC 8392, DOI 10.17487/RFC8392,

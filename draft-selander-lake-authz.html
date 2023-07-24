@@ -23,8 +23,8 @@
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.2
-    platformdirs 3.8.0
+    lxml 4.9.3
+    platformdirs 3.9.1
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.31.0
@@ -1055,7 +1055,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Selander, et al.</td>
-<td class="center">Expires 8 January 2024</td>
+<td class="center">Expires 25 January 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-selander-lake-authz-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-07-07" class="published">7 July 2023</time>
+<time datetime="2023-07-24" class="published">24 July 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-01-08">8 January 2024</time></dd>
+<dd class="expires"><time datetime="2024-01-25">25 January 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1139,7 +1139,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 January 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 25 January 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1320,6 +1320,7 @@ Appendix C.1 of <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf
       </h2>
 <p id="section-2-1">The (potentially constrained) device (U) wants to enroll into a domain over a constrained link.
 The device authenticates and enforces authorization of the (non-constrained) domain authenticator (V) with the help of a voucher conveying authorization information.
+The voucher has a similar role as in <span>[<a href="#RFC8366" class="cite xref">RFC8366</a>]</span> but should be considerably more compact.
 The domain authenticator, in turn, authenticates the device and authorizes its enrollment into the domain.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">The procedure is assisted by a (non-constrained) enrollment server (W) located in a non-constrained network behind the domain authenticator, e.g. on the Internet, providing information to the device (the voucher) and to the domain authenticator as part of the protocol.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <p id="section-2-3">The objective of this document is to specify such a protocol which is lightweight over the constrained link by reusing elements of EDHOC <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> and by shifting message overhead to the non-constrained side of the network.
@@ -1437,20 +1438,20 @@ See illustration in <a href="#fig-overview" class="auto internal xref">Figure 1<
                 <text x="292" y="52">from</text>
                 <text x="340" y="52">device</text>
                 <text x="420" y="52">manufacture)</text>
-                <text x="380" y="116">non-</text>
                 <text x="52" y="132">Device</text>
                 <text x="148" y="132">con-</text>
                 <text x="260" y="132">Domain</text>
-                <text x="380" y="132">con-</text>
+                <text x="360" y="132">not</text>
+                <text x="396" y="132">con-</text>
                 <text x="500" y="132">Enrollment</text>
-                <text x="152" y="148">stra-</text>
+                <text x="148" y="148">strained</text>
                 <text x="264" y="148">Authenticator</text>
-                <text x="384" y="148">stra-</text>
+                <text x="380" y="148">strained</text>
                 <text x="500" y="148">Server</text>
                 <text x="48" y="164">(U)</text>
-                <text x="148" y="164">ined</text>
-                <text x="264" y="164">(V)</text>
-                <text x="380" y="164">ined</text>
+                <text x="144" y="164">network</text>
+                <text x="272" y="164">(V)</text>
+                <text x="376" y="164">network</text>
                 <text x="496" y="164">(W)</text>
                 <text x="92" y="244">No</text>
                 <text x="140" y="244">previous</text>
@@ -2342,11 +2343,15 @@ No A, AAAA, or PTR record is requested.<a href="#section-7.3-1" class="pilcrow">
 <dl class="references">
 <dt id="I-D.ietf-lake-edhoc">[I-D.ietf-lake-edhoc]</dt>
         <dd>
-<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, and <span class="refAuthor">F. Palombini</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lake-edhoc-20</span>, <time datetime="2023-07-07" class="refDate">7 July 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/api/v1/doc/document/draft-ietf-lake-edhoc/">https://datatracker.ietf.org/api/v1/doc/document/draft-ietf-lake-edhoc/</a>&gt;</span>. </dd>
+<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, and <span class="refAuthor">F. Palombini</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lake-edhoc-20</span>, <time datetime="2023-07-07" class="refDate">7 July 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20">https://datatracker.ietf.org/doc/html/draft-ietf-lake-edhoc-20</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="NIST-800-56A">[NIST-800-56A]</dt>
         <dd>
 <span class="refAuthor">Barker, E.</span>, <span class="refAuthor">Chen, L.</span>, <span class="refAuthor">Roginsky, A.</span>, <span class="refAuthor">Vassilev, A.</span>, and <span class="refAuthor">R. Davis</span>, <span class="refTitle">"Recommendation for Pair-Wise Key-Establishment Schemes Using Discrete Logarithm Cryptography - NIST Special Publication 800-56A, Revision 3"</span>, <time datetime="2018-04" class="refDate">April 2018</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Ar3.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Ar3.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8366">[RFC8366]</dt>
+        <dd>
+<span class="refAuthor">Watsen, K.</span>, <span class="refAuthor">Richardson, M.</span>, <span class="refAuthor">Pritikin, M.</span>, and <span class="refAuthor">T. Eckert</span>, <span class="refTitle">"A Voucher Artifact for Bootstrapping Protocols"</span>, <span class="seriesInfo">RFC 8366</span>, <span class="seriesInfo">DOI 10.17487/RFC8366</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8366">https://www.rfc-editor.org/info/rfc8366</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8392">[RFC8392]</dt>
         <dd>
